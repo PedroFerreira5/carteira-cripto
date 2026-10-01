@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>Rastreador de Compras</title>
+<title>Carteira Cripto</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
@@ -34,11 +34,10 @@
     -webkit-font-smoothing: antialiased;
   }
   ::selection { background: var(--gold); color: var(--ink); }
-
-  /* ---- Scrollbar customizada (tema escuro) ---- */
+  
   * {
-    scrollbar-width: thin; /* Firefox: fina */
-    scrollbar-color: var(--line) transparent; /* Firefox: thumb / track */
+    scrollbar-width: thin; 
+    scrollbar-color: var(--line) transparent; 
   }
   ::-webkit-scrollbar { width: 8px; height: 7px; }
   ::-webkit-scrollbar-track { background: transparent; }
@@ -52,7 +51,6 @@
   ::-webkit-scrollbar-thumb:hover { background-color: var(--gold); }
   ::-webkit-scrollbar-button { display: none; width: 0; height: 0; }
   ::-webkit-scrollbar-corner { background: transparent; }
-
   .overflow-x {
     scrollbar-width: thin;
     scrollbar-color: var(--line) var(--surface-2);
@@ -68,7 +66,6 @@
   .overflow-x::-webkit-scrollbar-thumb:hover { background-color: var(--gold); }
   .overflow-x::-webkit-scrollbar-button { display: none; width: 0; height: 0; }
   .wrap { max-width: 1020px; margin: 0 auto; padding: 48px 24px 80px; }
-
   header {
     display: flex; align-items: baseline; justify-content: space-between;
     border-bottom: 1px solid var(--line); padding-bottom: 20px; margin-bottom: 28px;
@@ -84,7 +81,6 @@
     transition: background .12s, color .12s;
   }
   .currency-toggle button.active { background: var(--gold); color: var(--ink); font-weight: 700; }
-
   .rate-bar {
     display: flex; align-items: center; gap: 10px; justify-content: flex-end;
     font-size: 12px; color: var(--paper-dim); margin-bottom: 24px;
@@ -94,14 +90,12 @@
     padding: 7px 8px; border-radius: var(--radius); font-family: inherit; font-size: 13px;
   }
   .rate-bar input:focus { outline: none; border-color: var(--gold); }
-
   .summary { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; margin-bottom: 24px; }
   .summary .cell { background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius); padding: 16px 18px; }
   .summary .label { font-size: 10.5px; color: var(--paper-dim); margin-bottom: 8px; text-transform: lowercase; }
   .summary .value { font-size: 20px; font-weight: 700; font-variant-numeric: tabular-nums; color: var(--paper); }
   .summary .pct { font-size: 12px; margin-top: 4px; font-variant-numeric: tabular-nums; }
   .up { color: var(--gain); } .down { color: var(--loss); } .neutral { color: var(--paper-dim); }
-
   .sell-banner {
     border: 1px solid var(--line); border-left: 3px solid var(--gold);
     background: var(--surface); border-radius: var(--radius);
@@ -111,17 +105,14 @@
   .sell-banner .amt { font-weight: 700; font-size: 17px; color: var(--paper); }
   .coin-sell { font-size: 12px; color: var(--paper-dim); padding: 10px 18px; border-top: 1px solid var(--line); background: rgba(255,255,255,0.015); }
   .coin-sell .amt { font-variant-numeric: tabular-nums; font-weight: 700; color: var(--paper); }
-
   .coin-sim { font-size: 12px; color: var(--paper-dim); padding: 10px 18px; border-top: 1px solid var(--line); display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
   .coin-sim .sim-label { white-space: nowrap; }
   .coin-sim input { width: 150px; background: var(--ink); border: 1px solid var(--line); color: var(--gold); padding: 6px 8px; border-radius: var(--radius); font-family: inherit; font-size: 12.5px; }
   .coin-sim input:focus { outline: none; border-color: var(--gold); }
   .coin-sim .sim-result { font-variant-numeric: tabular-nums; }
   .coin-sim .amt { font-weight: 700; color: var(--paper); }
-
   .breakeven { font-size: 12px; color: var(--paper-dim); padding: 10px 18px; border-top: 1px solid var(--line); }
   .breakeven .amt { color: var(--gold); font-weight: 700; font-variant-numeric: tabular-nums; }
-
   .coin-search { margin-bottom: 16px; display: flex; gap: 10px; }
   .coin-search input { flex: 1; background: var(--surface); border: 1px solid var(--line); color: var(--paper); padding: 11px 14px; border-radius: var(--radius); font-family: inherit; font-size: 13px; }
   .coin-search input:focus { outline: none; border-color: var(--gold); }
@@ -129,8 +120,7 @@
   #updateAllBtn { height: auto; }
   #sortSelect, #salesMonthFilter { background: var(--surface); border: 1px solid var(--line); color: var(--paper-dim); padding: 0 10px; border-radius: var(--radius); font-family: inherit; font-size: 12px; }
   #sortSelect:focus, #salesMonthFilter:focus { outline: none; border-color: var(--gold); }
-
-  /* ---- Tabs ---- */
+  
   .tabs-wrap { margin-bottom: 32px; }
   .tabs { display: flex; gap: 2px; border-bottom: 1px solid var(--line); }
   .tab-btn {
@@ -146,7 +136,6 @@
   .tab-panel.active { display: block; }
   .tab-panel.sell-panel .form-grid .btn { background: transparent; border: 1px solid var(--loss); color: var(--loss); }
   .tab-panel.sell-panel .form-grid .btn:hover { background: var(--loss); color: var(--ink); }
-
   .form-grid { display: grid; grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr auto; gap: 10px; align-items: end; }
   @media (max-width: 980px) { .form-grid { grid-template-columns: 1fr 1fr 1fr; } }
   @media (max-width: 640px) { .form-grid { grid-template-columns: 1fr 1fr; } }
@@ -156,7 +145,7 @@
     padding: 9px 10px; border-radius: var(--radius); font-family: inherit; font-size: 13px;
   }
   .field input:focus { outline: none; border-color: var(--gold); }
-  /* deixa o ícone do seletor de data combinar com o tema escuro */
+  
   input[type="date"] { color-scheme: dark; }
   input[type="date"]::-webkit-calendar-picker-indicator {
     filter: invert(70%) sepia(35%) saturate(500%) hue-rotate(2deg) brightness(1.05);
@@ -171,7 +160,6 @@
   #importFeedback .err { color: var(--loss); }
   #importFeedback ul { margin: 6px 0 0; padding-left: 18px; color: var(--paper-dim); }
   .computed-qty { font-size: 11.5px; color: var(--gold); margin-top: 10px; min-height: 16px; }
-
   .btn {
     background: var(--gold); color: #1a1408; border: none; padding: 9px 18px; border-radius: var(--radius);
     font-family: inherit; font-size: 12.5px; font-weight: 700; cursor: pointer; white-space: nowrap; height: 38px;
@@ -183,7 +171,6 @@
   .btn-ghost { background: transparent; border: 1px solid var(--line); color: var(--paper-dim); }
   .btn-ghost:hover { color: var(--paper); border-color: var(--paper-dim); box-shadow: none; filter: none; }
   .error-msg { color: var(--loss); font-size: 12px; margin-top: 10px; }
-
   .coin-group { border: 1px solid var(--line); border-radius: var(--radius); margin-bottom: 16px; overflow: hidden; background: var(--surface); }
   .coin-header { display: flex; align-items: center; justify-content: space-between; background: var(--surface-2); padding: 14px 18px; gap: 16px; flex-wrap: wrap; }
   .coin-name-wrap { display: flex; align-items: baseline; gap: 10px; flex-wrap: wrap; }
@@ -212,20 +199,17 @@
     font-size: 10px; color: var(--paper-dim); cursor: help; flex-shrink: 0;
   }
   .help-icon:hover { color: var(--gold); border-color: var(--gold); }
-
   .empty { text-align: center; padding: 48px 20px; color: var(--paper-dim); border: 1px dashed var(--line); border-radius: var(--radius); font-size: 13px; }
   .empty .big { font-size: 16px; color: var(--paper); margin-bottom: 8px; font-weight: 700; }
   .empty.small { padding: 22px 16px; font-size: 12px; margin-bottom: 20px; }
-
   .section-title { font-size: 16px; font-weight: 700; color: var(--gold); margin: 36px 0 6px; border-top: 1px solid var(--line); padding-top: 24px; }
   .section-sub { font-size: 11px; color: var(--paper-dim); margin-bottom: 16px; line-height: 1.6; }
   .sales-filter-bar { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; margin-bottom: 14px; font-size: 12px; color: var(--paper-dim); }
   .period-result { font-size: 13px; }
   .period-result .amt { font-weight: 700; color: var(--paper); }
-
   footer { margin-top: 40px; padding-top: 16px; border-top: 1px solid var(--line); font-size: 11px; color: var(--paper-dim); display: flex; justify-content: space-between; flex-wrap: wrap; gap: 10px; }
-
-  /* ===================== RESPONSIVE / MOBILE ===================== */
+  .disclaimer { margin: 18px 0 0; font-size: 10.5px; line-height: 1.6; color: var(--paper-dim); opacity: .8; }
+  
   @media (max-width: 600px) {
     .wrap { padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)); padding-top: 28px; padding-bottom: 56px; }
     header { flex-direction: column; align-items: stretch; gap: 14px; padding-bottom: 16px; margin-bottom: 22px; }
@@ -294,7 +278,7 @@
 <div class="wrap">
   <header>
     <div>
-      <h1>Rastreador de <span class="accent">Compras</span></h1>
+      <h1>Carteira <span class="accent">Cripto</span></h1>
       <div class="sub">lucro e prejuízo, compra a compra</div>
     </div>
     <div class="currency-toggle" id="currencyToggle">
@@ -438,6 +422,9 @@ PEPE	100	0.0000098"></textarea>
       <button class="btn btn-ghost" id="clearAllBtn">apagar tudo</button>
     </div>
   </footer>
+  <p class="disclaimer">
+    Ferramenta de acompanhamento pessoal, apenas informativa. Não constitui aconselhamento financeiro nem cálculo oficial de imposto de renda sobre criptoativos. Confira os valores com seus extratos e, se necessário, com um contador.
+  </p>
 </div>
 
 <script>
@@ -447,7 +434,6 @@ PEPE	100	0.0000098"></textarea>
   const CUR_KEY = 'crypto-tracker-currency-v2';
   const RATE_KEY = 'crypto-tracker-current-rate-v2';
   const SORT_KEY = 'crypto-tracker-sort-v1';
-
   let purchases = [];
   let sales = [];
   let currency = 'USDT';
@@ -456,27 +442,72 @@ PEPE	100	0.0000098"></textarea>
   let sortMode = 'alpha';
   let simPrices = {};
   let salesMonthFilter = 'all';
-
+  function escapeHtml(s){
+    return String(s === null || s === undefined ? '' : s)
+      .replace(/&/g, '&amp;')
+      .replace(/</g, '&lt;')
+      .replace(/>/g, '&gt;')
+      .replace(/"/g, '&quot;')
+      .replace(/'/g, '&#39;');
+  }
+  function cssEsc(s){
+    return (window.CSS && CSS.escape) ? CSS.escape(String(s)) : String(s).replace(/["\\]/g, '\\$&');
+  }
+  function uid(){ return Math.random().toString(36).slice(2, 10); }
+  function toNum(v){ const n = Number(v); return isFinite(n) ? n : null; }
+  function sanitizeDate(d){
+    return (typeof d === 'string' && /^\d{4}-\d{2}-\d{2}$/.test(d)) ? d : '';
+  }
+  function sanitizePurchase(p){
+    if (!p || typeof p !== 'object') return null;
+    const coin = String(p.coin || '').trim().toUpperCase().slice(0, 30);
+    const usdtSpent = toNum(p.usdtSpent), price = toNum(p.price);
+    if (!coin || !(usdtSpent > 0) || !(price > 0)) return null;
+    const qty = toNum(p.qty), fee = toNum(p.fee), rate = toNum(p.dollarRate), cur = toNum(p.currentPrice);
+    return {
+      id: String(p.id || uid()).slice(0, 40),
+      coin, usdtSpent, price,
+      qty: qty > 0 ? qty : usdtSpent / price,
+      fee: fee > 0 ? fee : null,
+      dollarRate: rate > 0 ? rate : null,
+      currentPrice: cur > 0 ? cur : price,
+      date: sanitizeDate(p.date)
+    };
+  }
+  function sanitizeSale(s){
+    if (!s || typeof s !== 'object') return null;
+    const coin = String(s.coin || '').trim().toUpperCase().slice(0, 30);
+    const qty = toNum(s.qty), sellPrice = toNum(s.sellPrice);
+    if (!coin || !(qty > 0) || !(sellPrice > 0)) return null;
+    const fee = toNum(s.fee), rate = toNum(s.dollarRate);
+    return {
+      id: String(s.id || uid()).slice(0, 40),
+      coin, qty, sellPrice,
+      fee: fee > 0 ? fee : null,
+      dollarRate: rate > 0 ? rate : null,
+      date: sanitizeDate(s.date)
+    };
+  }
+  function sanitizeList(arr, fn){
+    return Array.isArray(arr) ? arr.map(fn).filter(Boolean) : [];
+  }
   function load(){
-    try { const raw = localStorage.getItem(STORAGE_KEY); purchases = raw ? JSON.parse(raw) : []; } catch(e){ purchases = []; }
-    try { const raw = localStorage.getItem(SALES_KEY); sales = raw ? JSON.parse(raw) : []; } catch(e){ sales = []; }
+    try { const raw = localStorage.getItem(STORAGE_KEY); purchases = sanitizeList(raw ? JSON.parse(raw) : [], sanitizePurchase); } catch(e){ purchases = []; }
+    try { const raw = localStorage.getItem(SALES_KEY); sales = sanitizeList(raw ? JSON.parse(raw) : [], sanitizeSale); } catch(e){ sales = []; }
     try { const cur = localStorage.getItem(CUR_KEY); if (cur === 'USD' || cur === 'BRL' || cur === 'USDT') currency = (cur==='USD'?'USDT':cur); } catch(e){}
-    try { const r = localStorage.getItem(RATE_KEY); if (r) currentDollarRate = parseFloat(r); } catch(e){}
+    try { const r = localStorage.getItem(RATE_KEY); if (r) { const n = parseFloat(r); if (isFinite(n) && n > 0) currentDollarRate = n; } } catch(e){}
   }
   function save(){ try { localStorage.setItem(STORAGE_KEY, JSON.stringify(purchases)); } catch(e){} }
   function saveSales(){ try { localStorage.setItem(SALES_KEY, JSON.stringify(sales)); } catch(e){} }
   function saveCurrency(){ try { localStorage.setItem(CUR_KEY, currency); } catch(e){} }
   function saveRate(){ try { localStorage.setItem(RATE_KEY, String(currentDollarRate ?? '')); } catch(e){} }
   function saveSort(){ try { localStorage.setItem(SORT_KEY, sortMode); } catch(e){} }
-
   function fmtNum(v, symbol){
     if (!isFinite(v)) v = 0;
     const abs = Math.abs(v);
     const formatted = abs.toLocaleString('pt-BR', {minimumFractionDigits: 2, maximumFractionDigits: 2});
     return symbol + ' ' + (v < 0 ? '-' : '') + formatted;
   }
-  // Formata PREÇOS UNITÁRIOS (não totais): decimais adaptativos, pra não sumir
-  // com moedas de valor muito baixo (PEPE, SHIB...). abs<0.01 -> até 8 casas; abs<1 -> até 6; senão 2.
   function fmtPrice(v, symbol){
     if (!isFinite(v)) v = 0;
     const abs = Math.abs(v);
@@ -494,43 +525,31 @@ PEPE	100	0.0000098"></textarea>
   }
   function fmtQty(v){ return Number(v).toLocaleString('pt-BR', {maximumFractionDigits: 8}); }
   function cls(v){ return v > 0 ? 'up' : (v < 0 ? 'down' : 'neutral'); }
-  function uid(){ return Math.random().toString(36).slice(2, 10); }
   function toDisplay(usdtValue, rate){
     if (currency === 'USDT') return usdtValue;
-    // cadeia de fallback: câmbio específico > cotação de hoje > 1 (nunca zera a tela,
-    // mesmo que nenhuma cotação tenha sido informada ainda)
     return usdtValue * (rate || currentDollarRate || 1);
   }
   function resultPhrase(gain, positive, negative, neutral){
     if (gain === 0) return neutral;
     return (gain > 0 ? positive : negative) + ' ' + fmtMoney(Math.abs(gain));
   }
-
-  // Reúne tudo que precisamos calcular para uma moeda: PM (já com taxas de compra
-  // embutidas no custo), saldo restante, resultado não realizado e realizado.
   function computeCoinStats(coin){
     const coinPurchases = purchases.filter(p => p.coin === coin).sort((a,b) => (b.date||'').localeCompare(a.date||''));
     const coinSales = sales.filter(s => s.coin === coin).sort((a,b) => (b.date||'').localeCompare(a.date||''));
-
     const qtyBought = coinPurchases.reduce((s,p) => s + p.qty, 0);
     const usdtSpentGross = coinPurchases.reduce((s,p) => s + p.usdtSpent, 0);
     const feesBuyTotal = coinPurchases.reduce((s,p) => s + (p.fee || 0), 0);
-    const costBasisTotal = usdtSpentGross + feesBuyTotal; // custo total, já com taxas de compra
-    const avgPrice = qtyBought > 0 ? costBasisTotal / qtyBought : 0; // Preço Médio (PM)
-
+    const costBasisTotal = usdtSpentGross + feesBuyTotal;
+    const avgPrice = qtyBought > 0 ? costBasisTotal / qtyBought : 0;
     const ratedPurchases = coinPurchases.filter(p => p.dollarRate);
     const ratedSpent = ratedPurchases.reduce((s,p) => s + p.usdtSpent, 0);
     const avgBuyRate = ratedSpent > 0 ? ratedPurchases.reduce((s,p) => s + p.usdtSpent*p.dollarRate, 0) / ratedSpent : null;
-
     const qtySold = coinSales.reduce((s,x) => s + x.qty, 0);
     const qtyRemaining = Math.max(0, qtyBought - qtySold);
-
     const currentPrice = coinPurchases.length ? (coinPurchases[0].currentPrice ?? coinPurchases[0].price) : 0;
-
     const costRemainingUSDT = qtyRemaining * avgPrice;
     const valueRemainingUSDT = qtyRemaining * currentPrice;
     const unrealizedUSDT = valueRemainingUSDT - costRemainingUSDT;
-
     let realizedUSDT = 0;
     const saleDetails = coinSales.map(s => {
       const costUSDT = s.qty * avgPrice;
@@ -547,13 +566,11 @@ PEPE	100	0.0000098"></textarea>
       const pct = costDisplay > 0 ? (gainDisplay / costDisplay) * 100 : 0;
       return { ...s, costUSDT, grossReceivedUSDT, netReceivedUSDT, gainUSDT, costDisplay, receivedDisplay, feeDisplay, gainDisplay, pct };
     });
-
     const investedRemainingDisplay = toDisplay(costRemainingUSDT, avgBuyRate);
     const valueRemainingDisplay = toDisplay(valueRemainingUSDT, currentDollarRate || avgBuyRate);
     const unrealizedDisplay = valueRemainingDisplay - investedRemainingDisplay;
     const unrealizedPct = investedRemainingDisplay > 0 ? (unrealizedDisplay / investedRemainingDisplay) * 100 : 0;
     const realizedDisplay = saleDetails.reduce((s,d) => s + d.gainDisplay, 0);
-
     return {
       coin, coinPurchases, coinSales, qtyBought, usdtSpentGross, feesBuyTotal, avgPrice, avgBuyRate,
       qtySold, qtyRemaining, currentPrice, costRemainingUSDT, valueRemainingUSDT, unrealizedUSDT,
@@ -561,7 +578,6 @@ PEPE	100	0.0000098"></textarea>
       saleDetails, realizedDisplay
     };
   }
-
   function render(){
     document.querySelectorAll('.currency-toggle button').forEach(b=>{
       b.classList.toggle('active', b.dataset.cur === currency);
@@ -572,10 +588,8 @@ PEPE	100	0.0000098"></textarea>
       (currency === 'BRL' && !currentDollarRate)
         ? 'sem cotação de hoje preenchida — usando o câmbio das compras como aproximação para "valor atual"'
         : '';
-
     const coinsWithPurchases = Array.from(new Set(purchases.map(p => p.coin)));
-    document.getElementById('coinDatalist').innerHTML = coinsWithPurchases.map(c => '<option value="' + c + '">').join('');
-
+    document.getElementById('coinDatalist').innerHTML = coinsWithPurchases.map(c => '<option value="' + escapeHtml(c) + '">').join('');
     let coins = coinsWithPurchases.slice();
     if (sortMode === 'usdt') {
       const usdtTotals = {};
@@ -584,10 +598,8 @@ PEPE	100	0.0000098"></textarea>
     } else {
       coins.sort();
     }
-
     const allStats = {};
     coins.forEach(c => { allStats[c] = computeCoinStats(c); });
-
     let totalInvestedRemaining = 0, totalValueRemaining = 0, totalRealized = 0;
     coins.forEach(c => {
       totalInvestedRemaining += allStats[c].investedRemainingDisplay;
@@ -596,7 +608,6 @@ PEPE	100	0.0000098"></textarea>
     });
     const totalUnrealized = totalValueRemaining - totalInvestedRemaining;
     const totalUnrealizedPct = totalInvestedRemaining > 0 ? (totalUnrealized / totalInvestedRemaining) * 100 : 0;
-
     document.getElementById('summary').innerHTML = `
       <div class="cell"><div class="label">custo em carteira</div><div class="value">${fmtMoney(totalInvestedRemaining)}</div></div>
       <div class="cell"><div class="label">valor atual</div><div class="value">${fmtMoney(totalValueRemaining)}</div></div>
@@ -610,51 +621,40 @@ PEPE	100	0.0000098"></textarea>
         <div class="value ${cls(totalRealized)}">${fmtMoney(totalRealized)}</div>
       </div>
     `;
-
     document.getElementById('sellBanner').innerHTML = coins.length === 0 ? '' : `
       se vender tudo que ainda tem hoje, você retira <span class="amt">${fmtMoney(totalValueRemaining)}</span> —
       <span class="${cls(totalUnrealized)}">${resultPhrase(totalUnrealized, 'lucro de', 'prejuízo de', 'sem lucro nem prejuízo')}${totalUnrealized !== 0 ? ' (' + fmtPct(totalUnrealizedPct) + ')' : ''}</span>
       ${totalRealized !== 0 ? ' &nbsp;•&nbsp; fora isso, já tem <span class="' + cls(totalRealized) + '">' + fmtMoney(Math.abs(totalRealized)) + (totalRealized > 0 ? ' de lucro' : ' de prejuízo') + '</span> realizado' : ''}
     `;
-
     const container = document.getElementById('coinGroups');
     if (coins.length === 0) {
       container.innerHTML = `<div class="empty"><div class="big">nenhuma compra registrada</div>cadastre sua primeira compra acima para começar a acompanhar</div>`;
       renderSalesHistory({});
       return;
     }
-
     const visibleCoins = searchTerm ? coins.filter(c => c.includes(searchTerm.toUpperCase())) : coins;
-
     if (visibleCoins.length === 0) {
-      container.innerHTML = `<div class="empty">nenhuma moeda encontrada para "${searchTerm}"</div>`;
+      container.innerHTML = `<div class="empty">nenhuma moeda encontrada para "${escapeHtml(searchTerm)}"</div>`;
       renderSalesHistory(allStats);
       return;
     }
-
     const showRateCol = currency === 'BRL';
-
     container.innerHTML = visibleCoins.map(coin => {
       const st = allStats[coin];
       const rows = st.coinPurchases;
       const zeroed = st.qtyRemaining <= 0;
-
-      // simPrices guarda a STRING exatamente como o usuário digitou (não um número
-      // arredondado), pra não perder zeros à direita / ponto decimal a cada tecla.
+      const coinH = escapeHtml(coin);
       const simPriceRaw = simPrices[coin] !== undefined ? simPrices[coin] : String(st.currentPrice);
       const simPrice = simPrices[coin] !== undefined ? parseFloat(simPrices[coin].replace(',', '.')) : st.currentPrice;
-      // preço usado nas colunas "valor atual" / "resultado" da tabela: o simulado,
-      // quando válido, senão o preço atual real da moeda — mantém tabela e rodapé em sincronia.
       const effectivePrice = (isFinite(simPrice) && simPrice > 0) ? simPrice : st.currentPrice;
-
       const rowsHtml = rows.map(p => {
         const investedDisplay = toDisplay(p.usdtSpent + (p.fee || 0), p.dollarRate);
         const curValDisplay = toDisplay(p.qty * effectivePrice, currentDollarRate || p.dollarRate || st.avgBuyRate);
         const gain = curValDisplay - investedDisplay;
         const pct = investedDisplay > 0 ? (gain/investedDisplay)*100 : 0;
         return `
-          <tr data-id="${p.id}">
-            <td>${p.date || '—'}</td>
+          <tr data-id="${escapeHtml(p.id)}">
+            <td>${escapeHtml(p.date) || '—'}</td>
             <td class="num">${fmtNum(p.usdtSpent, 'USDT')}</td>
             <td class="num">${fmtPrice(p.price, 'USDT')}</td>
             <td class="num">${p.fee ? fmtNum(p.fee, 'USDT') : '—'}</td>
@@ -664,11 +664,10 @@ PEPE	100	0.0000098"></textarea>
             <td class="num ${cls(gain)}">${fmtMoney(gain)}</td>
             <td class="num ${cls(gain)}">${fmtPct(pct)}</td>
             ${showRateCol ? `<td class="num">${p.dollarRate ? p.dollarRate.toLocaleString('pt-BR',{minimumFractionDigits:2,maximumFractionDigits:2}) : '—'}</td>` : ''}
-            <td class="num"><button class="del-btn" data-del="${p.id}">remover</button></td>
+            <td class="num"><button class="del-btn" data-del="${escapeHtml(p.id)}">remover</button></td>
           </tr>
         `;
       }).join('');
-
       let simHtml = '';
       if (!zeroed && isFinite(simPrice) && simPrice > 0) {
         const simValueUSDT = st.qtyRemaining * simPrice;
@@ -678,22 +677,21 @@ PEPE	100	0.0000098"></textarea>
         simHtml = `você recebe <span class="amt">${fmtMoney(simValueDisplay)}</span> —
           <span class="${cls(simGain)}">${resultPhrase(simGain, 'lucro de', 'prejuízo de', 'sem lucro nem prejuízo')}${simGain !== 0 ? ' (' + fmtPct(simPct) + ')' : ''}</span>`;
       }
-
       return `
         <div class="coin-group">
           <div class="coin-header">
             <div class="coin-name-wrap">
-              <div class="coin-name">${coin}</div>
+              <div class="coin-name">${coinH}</div>
               <div class="coin-pm">PM <span class="amt">${fmtPrice(st.avgPrice, 'USDT')}</span></div>
               ${zeroed ? '<div class="coin-zeroed-badge">posição zerada</div>' : ''}
             </div>
             <div class="price-edit">
               preço atual (USDT)
-              <input type="number" step="any" value="${st.currentPrice}" data-curprice="${coin}">
-              <button class="btn btn-ghost fetch-btn" data-fetch="${coin}" type="button">buscar preço</button>
+              <input type="number" step="any" value="${escapeHtml(st.currentPrice)}" data-curprice="${coinH}">
+              <button class="btn btn-ghost fetch-btn" data-fetch="${coinH}" type="button">buscar preço</button>
             </div>
             <div class="coin-summary">
-              <span>restante <span class="amt">${fmtQty(st.qtyRemaining)} ${coin}</span></span>
+              <span>restante <span class="amt">${fmtQty(st.qtyRemaining)} ${coinH}</span></span>
               <span>custo em carteira <span class="amt">${fmtMoney(st.investedRemainingDisplay)}</span></span>
               <span>não realizado <span class="amt ${cls(st.unrealizedDisplay)}">${fmtMoney(st.unrealizedDisplay)} (${fmtPct(st.unrealizedPct)})</span></span>
               <span>realizado <span class="amt ${cls(st.realizedDisplay)}">${fmtMoney(st.realizedDisplay)}</span></span>
@@ -723,10 +721,10 @@ PEPE	100	0.0000098"></textarea>
             ${zeroed ? '' : 'break-even: vender a partir de <span class="amt">' + fmtPrice(st.avgPrice, 'USDT') + '</span> por unidade pra empatar (já considera as taxas pagas nas compras)'}
           </div>
           ${zeroed
-            ? `<div class="coin-sell">toda a posição em ${coin} já foi vendida — nada restando para vender.</div>`
+            ? `<div class="coin-sell">toda a posição em ${coinH} já foi vendida — nada restando para vender.</div>`
             : `<div class="coin-sim">
                 <span class="sim-label">vender a</span>
-                <input type="text" inputmode="decimal" data-sim="${coin}" value="${simPriceRaw}">
+                <input type="text" inputmode="decimal" data-sim="${coinH}" value="${escapeHtml(simPriceRaw)}">
                 <span class="sim-label">USDT →</span>
                 <span class="sim-result">${simHtml}</span>
               </div>`
@@ -734,7 +732,6 @@ PEPE	100	0.0000098"></textarea>
         </div>
       `;
     }).join('');
-
     container.querySelectorAll('[data-del]').forEach(btn => {
       btn.addEventListener('click', () => {
         purchases = purchases.filter(p => p.id !== btn.dataset.del);
@@ -750,8 +747,8 @@ PEPE	100	0.0000098"></textarea>
         save();
         const caret = inp.selectionStart;
         render();
-        const newInp = document.querySelector('[data-curprice="' + coin + '"]');
-        if (newInp) { newInp.focus(); newInp.setSelectionRange(caret, caret); }
+        const newInp = document.querySelector('[data-curprice="' + cssEsc(coin) + '"]');
+        if (newInp) { newInp.focus(); try { newInp.setSelectionRange(caret, caret); } catch(e){} }
       });
     });
     container.querySelectorAll('[data-fetch]').forEach(btn => {
@@ -761,43 +758,35 @@ PEPE	100	0.0000098"></textarea>
       inp.addEventListener('input', () => {
         const coin = inp.dataset.sim;
         const val = inp.value;
-        if (val === '') { delete simPrices[coin]; } else { simPrices[coin] = val; } // guarda a string crua, sem parsear
+        if (val === '') { delete simPrices[coin]; } else { simPrices[coin] = val; }
         const caret = inp.selectionStart;
         render();
-        const newInp = document.querySelector('[data-sim="' + coin + '"]');
+        const newInp = document.querySelector('[data-sim="' + cssEsc(coin) + '"]');
         if (newInp) { newInp.focus(); newInp.setSelectionRange(caret, caret); }
       });
     });
-
     renderSalesHistory(allStats);
   }
-
   function renderSalesHistory(allStats){
     const el = document.getElementById('salesHistory');
     const filterSelect = document.getElementById('salesMonthFilter');
     const periodResultEl = document.getElementById('periodResult');
-
     const allSaleDetails = [];
     Object.keys(allStats).forEach(coin => {
       allStats[coin].saleDetails.forEach(d => allSaleDetails.push(d));
     });
     allSaleDetails.sort((a,b) => (b.date||'').localeCompare(a.date||''));
-
-    // popula o filtro de mês com os meses realmente presentes nas vendas
     const months = Array.from(new Set(allSaleDetails.filter(d => d.date).map(d => d.date.slice(0,7)))).sort().reverse();
     const currentSelection = salesMonthFilter;
     filterSelect.innerHTML = '<option value="all">todos os meses</option>' +
-      months.map(m => `<option value="${m}">${m}</option>`).join('');
+      months.map(m => `<option value="${escapeHtml(m)}">${escapeHtml(m)}</option>`).join('');
     filterSelect.value = months.includes(currentSelection) || currentSelection === 'all' ? currentSelection : 'all';
     salesMonthFilter = filterSelect.value;
-
     const filtered = salesMonthFilter === 'all' ? allSaleDetails : allSaleDetails.filter(d => (d.date||'').slice(0,7) === salesMonthFilter);
-
     const periodGain = filtered.reduce((s,d) => s + d.gainDisplay, 0);
     periodResultEl.innerHTML = filtered.length
       ? `lucro realizado no período: <span class="amt ${cls(periodGain)}">${fmtMoney(periodGain)}</span>`
       : '';
-
     if (sales.length === 0) {
       el.innerHTML = `<div class="empty small">nenhuma venda registrada ainda.</div>`;
       return;
@@ -806,7 +795,6 @@ PEPE	100	0.0000098"></textarea>
       el.innerHTML = `<div class="empty small">nenhuma venda no período selecionado.</div>`;
       return;
     }
-
     const showRateCol = currency === 'BRL';
     el.innerHTML = `
       <div class="coin-group">
@@ -830,9 +818,9 @@ PEPE	100	0.0000098"></textarea>
             </thead>
             <tbody>
               ${filtered.map(d => `
-                <tr data-id="${d.id}">
-                  <td>${d.date || '—'}</td>
-                  <td>${d.coin}</td>
+                <tr data-id="${escapeHtml(d.id)}">
+                  <td>${escapeHtml(d.date) || '—'}</td>
+                  <td>${escapeHtml(d.coin)}</td>
                   <td class="num">${fmtQty(d.qty)}</td>
                   <td class="num">${fmtPrice(d.sellPrice, 'USDT')}</td>
                   <td class="num">${d.fee ? fmtNum(d.fee, 'USDT') : '—'}</td>
@@ -842,7 +830,7 @@ PEPE	100	0.0000098"></textarea>
                   <td class="num">${fmtMoney(d.receivedDisplay)}</td>
                   <td class="num ${cls(d.gainDisplay)}">${fmtMoney(d.gainDisplay)}</td>
                   <td class="num ${cls(d.gainDisplay)}">${fmtPct(d.pct)}</td>
-                  <td class="num"><button class="del-btn" data-delsale="${d.id}">remover</button></td>
+                  <td class="num"><button class="del-btn" data-delsale="${escapeHtml(d.id)}">remover</button></td>
                 </tr>
               `).join('')}
             </tbody>
@@ -857,13 +845,10 @@ PEPE	100	0.0000098"></textarea>
       });
     });
   }
-
   document.getElementById('salesMonthFilter').addEventListener('change', (e) => {
     salesMonthFilter = e.target.value;
     render();
   });
-
-  // ---- Sistema de abas (Nova compra / Importar / Registrar venda) ----
   document.querySelectorAll('.tab-btn').forEach(btn => {
     btn.addEventListener('click', () => {
       document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
@@ -872,8 +857,6 @@ PEPE	100	0.0000098"></textarea>
       document.querySelector('.tab-panel[data-panel="' + btn.dataset.tab + '"]').classList.add('active');
     });
   });
-
-  // Busca crua o preço na Binance, sem tocar em UI. Retorna número ou null.
   async function fetchBinancePrice(coin){
     try {
       const res = await fetch('https://api.binance.com/api/v3/ticker/price?symbol=' + encodeURIComponent(coin) + 'USDT');
@@ -883,7 +866,7 @@ PEPE	100	0.0000098"></textarea>
       return isFinite(price) ? price : null;
     } catch (e) { return null; }
   }
-
+  const FETCH_FAIL_HINT = 'verifique sua conexão e tente de novo em instantes. a API da Binance pode estar indisponível, bloqueada na sua rede, ou a moeda pode não ter par com USDT.';
   async function fetchPriceForButton(coin, btn){
     const original = btn.textContent;
     btn.textContent = 'buscando...';
@@ -895,17 +878,15 @@ PEPE	100	0.0000098"></textarea>
     } else {
       btn.textContent = original;
       btn.disabled = false;
-      alert('não foi possível buscar o preço de ' + coin + ' automaticamente aqui.\n\nisso costuma acontecer no link hospedado pelo Claude, que bloqueia esse tipo de requisição por segurança — mas funciona normalmente se você hospedar a página em outro lugar (ex: GitHub Pages).\n\nvocê pode continuar preenchendo o preço manualmente.');
+      alert('não foi possível buscar o preço de ' + coin + ' automaticamente.\n\n' + FETCH_FAIL_HINT + '\n\nvocê pode continuar preenchendo o preço manualmente.');
     }
   }
-
   async function fetchAllPrices(silent){
     const btn = document.getElementById('updateAllBtn');
     const coins = Array.from(new Set(purchases.map(p => p.coin)));
     if (coins.length === 0) return;
     const originalText = btn ? btn.textContent : '';
     if (btn) { btn.textContent = 'atualizando...'; btn.disabled = true; }
-
     const results = await Promise.all(coins.map(c => fetchBinancePrice(c)));
     let updated = 0;
     const failed = [];
@@ -915,18 +896,15 @@ PEPE	100	0.0000098"></textarea>
         updated++;
       } else { failed.push(coin); }
     });
-
     if (updated > 0) save();
     render();
     if (btn) { btn.textContent = originalText; btn.disabled = false; }
-
     if (!silent && failed.length === coins.length) {
-      alert('não foi possível buscar preços automaticamente aqui.\n\nisso costuma acontecer no link hospedado pelo Claude, que bloqueia esse tipo de requisição por segurança — mas funciona normalmente se você hospedar a página em outro lugar (ex: GitHub Pages).\n\nvocê pode continuar preenchendo os preços manualmente.');
+      alert('não foi possível buscar preços automaticamente.\n\n' + FETCH_FAIL_HINT + '\n\nvocê pode continuar preenchendo os preços manualmente.');
     } else if (!silent && failed.length > 0) {
       alert('atualizado: ' + updated + ' moeda(s).\nnão encontradas na Binance: ' + failed.join(', ') + '.');
     }
   }
-
   function updateComputedQty(){
     const usdt = parseFloat(document.getElementById('f-usdt').value.replace(',', '.'));
     const price = parseFloat(document.getElementById('f-price').value.replace(',', '.'));
@@ -937,7 +915,6 @@ PEPE	100	0.0000098"></textarea>
   }
   document.getElementById('f-usdt').addEventListener('input', updateComputedQty);
   document.getElementById('f-price').addEventListener('input', updateComputedQty);
-
   document.getElementById('addBtn').addEventListener('click', () => {
     const coinEl = document.getElementById('f-coin');
     const usdtEl = document.getElementById('f-usdt');
@@ -947,18 +924,15 @@ PEPE	100	0.0000098"></textarea>
     const dateEl = document.getElementById('f-date');
     const errEl = document.getElementById('errorMsg');
     errEl.textContent = '';
-
     const coin = coinEl.value.trim().toUpperCase();
     const usdtSpent = parseFloat(usdtEl.value.replace(',', '.'));
     const price = parseFloat(priceEl.value.replace(',', '.'));
     const fee = parseFloat(feeEl.value.replace(',', '.'));
     const dollarRate = parseFloat(rateEl.value.replace(',', '.'));
     const date = dateEl.value;
-
     if (!coin) { errEl.textContent = 'informe o nome da moeda.'; return; }
     if (!isFinite(usdtSpent) || usdtSpent <= 0) { errEl.textContent = 'informe quanto foi gasto em USDT.'; return; }
     if (!isFinite(price) || price <= 0) { errEl.textContent = 'informe o preço da moeda no momento da compra.'; return; }
-
     const qty = usdtSpent / price;
     purchases.push({
       id: uid(), coin, usdtSpent, price, qty,
@@ -972,7 +946,6 @@ PEPE	100	0.0000098"></textarea>
     coinEl.focus();
     render();
   });
-
   function updateSellAvailable(){
     const coin = document.getElementById('s-coin').value.trim().toUpperCase();
     const el = document.getElementById('sellAvailable');
@@ -983,7 +956,6 @@ PEPE	100	0.0000098"></textarea>
   }
   document.getElementById('s-coin').addEventListener('input', updateSellAvailable);
   document.getElementById('s-coin').addEventListener('change', updateSellAvailable);
-
   document.getElementById('sellBtn').addEventListener('click', () => {
     const coinEl = document.getElementById('s-coin');
     const qtyEl = document.getElementById('s-qty');
@@ -993,14 +965,12 @@ PEPE	100	0.0000098"></textarea>
     const dateEl = document.getElementById('s-date');
     const errEl = document.getElementById('sellErrorMsg');
     errEl.textContent = '';
-
     const coin = coinEl.value.trim().toUpperCase();
     const qty = parseFloat(qtyEl.value.replace(',', '.'));
     const sellPrice = parseFloat(priceEl.value.replace(',', '.'));
     const fee = parseFloat(feeEl.value.replace(',', '.'));
     const dollarRate = parseFloat(rateEl.value.replace(',', '.'));
     const date = dateEl.value;
-
     if (!coin) { errEl.textContent = 'informe a moeda.'; return; }
     const st = computeCoinStats(coin);
     if (st.qtyBought === 0) { errEl.textContent = 'essa moeda ainda não tem nenhuma compra registrada.'; return; }
@@ -1010,7 +980,6 @@ PEPE	100	0.0000098"></textarea>
       return;
     }
     if (!isFinite(sellPrice) || sellPrice <= 0) { errEl.textContent = 'informe o preço de venda.'; return; }
-
     sales.push({
       id: uid(), coin, qty, sellPrice,
       fee: isFinite(fee) && fee > 0 ? fee : null,
@@ -1022,7 +991,6 @@ PEPE	100	0.0000098"></textarea>
     document.getElementById('sellAvailable').textContent = '';
     render();
   });
-
   function parseImportLine(line){
     const delim = line.includes('\t') ? '\t' : ',';
     const parts = line.split(delim).map(s => s.trim());
@@ -1031,31 +999,27 @@ PEPE	100	0.0000098"></textarea>
       usdtSpent: parts[1] !== undefined && parts[1] !== '' ? parseFloat(parts[1].replace(',', '.')) : NaN,
       price: parts[2] !== undefined && parts[2] !== '' ? parseFloat(parts[2].replace(',', '.')) : NaN,
       dollarRate: parts[3] !== undefined && parts[3] !== '' ? parseFloat(parts[3].replace(',', '.')) : null,
-      date: parts[4] !== undefined ? parts[4].trim() : ''
+      date: parts[4] !== undefined ? sanitizeDate(parts[4].trim()) : ''
     };
   }
   function isHeaderLine(line){
     const lower = line.toLowerCase();
     return lower.includes('moeda') && (lower.includes('usdt') || lower.includes('preço') || lower.includes('preco'));
   }
-
   document.getElementById('importExampleBtn').addEventListener('click', () => {
     document.getElementById('importText').value =
       'BTC\t500\t350000\t5.30\t2026-03-10\n' +
       'ETH\t300\t18500\t\t2026-05-02\n' +
       'PEPE\t100\t0.0000098';
   });
-
   document.getElementById('importBtn').addEventListener('click', () => {
     const raw = document.getElementById('importText').value;
     const feedback = document.getElementById('importFeedback');
     const lines = raw.split('\n').map(l => l.trim()).filter(l => l.length > 0);
-
     if (lines.length === 0) {
       feedback.innerHTML = '<span class="err">cole ao menos uma linha para importar.</span>';
       return;
     }
-
     let added = 0;
     const errors = [];
     lines.forEach((line, idx) => {
@@ -1064,31 +1028,30 @@ PEPE	100	0.0000098"></textarea>
       if (!row.coin) { errors.push('linha ' + (idx+1) + ': moeda não informada.'); return; }
       if (!isFinite(row.usdtSpent) || row.usdtSpent <= 0) { errors.push('linha ' + (idx+1) + ' (' + row.coin + '): valor de USDT gasto inválido.'); return; }
       if (!isFinite(row.price) || row.price <= 0) { errors.push('linha ' + (idx+1) + ' (' + row.coin + '): preço inválido.'); return; }
-
       purchases.push({
-        id: uid(), coin: row.coin, usdtSpent: row.usdtSpent, price: row.price,
+        id: uid(), coin: row.coin.slice(0, 30), usdtSpent: row.usdtSpent, price: row.price,
         qty: row.usdtSpent / row.price, fee: null,
         dollarRate: (row.dollarRate && isFinite(row.dollarRate) && row.dollarRate > 0) ? row.dollarRate : null,
         currentPrice: row.price, date: row.date || ''
       });
       added++;
     });
-
     if (added > 0) { save(); render(); }
-
     let html = '';
     if (added > 0) html += '<span class="ok">' + added + ' compra(s) importada(s) com sucesso.</span>';
     if (errors.length > 0) {
       html += '<div class="err" style="margin-top:6px;">' + errors.length + ' linha(s) com problema:</div><ul>' +
-        errors.map(e => '<li>' + e + '</li>').join('') + '</ul>';
+        errors.map(e => '<li>' + escapeHtml(e) + '</li>').join('') + '</ul>';
     }
     feedback.innerHTML = html;
     if (added > 0 && errors.length === 0) document.getElementById('importText').value = '';
   });
-
-  // ---- Exportação para CSV (pt-BR: ; como separador, vírgula decimal, com BOM) ----
   function csvNum(v){
     return (v === null || v === undefined || !isFinite(v)) ? '' : String(v).replace('.', ',');
+  }
+  function csvText(v){
+    const s = String(v === null || v === undefined ? '' : v).replace(/;/g, ',');
+    return /^[=+\-@\t\r]/.test(s) ? "'" + s : s;
   }
   document.getElementById('exportCsvBtn').addEventListener('click', () => {
     const header = ['Tipo','Moeda','Data','Quantidade','Preco (USDT)','Total (USDT)','Taxa (USDT)','Cambio (USD/BRL)'];
@@ -1099,19 +1062,18 @@ PEPE	100	0.0000098"></textarea>
     sales.forEach(s => {
       rows.push(['Venda', s.coin, s.date || '', csvNum(s.qty), csvNum(s.sellPrice), csvNum(s.qty * s.sellPrice), csvNum(s.fee || 0), csvNum(s.dollarRate || '')]);
     });
-    const csvContent = '\uFEFF' + rows.map(r => r.map(f => String(f).replace(/;/g, ',')).join(';')).join('\r\n');
+    const csvContent = '\uFEFF' + rows.map(r => r.map(csvText).join(';')).join('\r\n');
     const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
     const url = URL.createObjectURL(blob);
     const a = document.createElement('a');
     const dateStr = new Date().toISOString().slice(0,10);
     a.href = url;
-    a.download = 'rastreador-cripto-' + dateStr + '.csv';
+    a.download = 'carteira-cripto-' + dateStr + '.csv';
     document.body.appendChild(a);
     a.click();
     document.body.removeChild(a);
     URL.revokeObjectURL(url);
   });
-
   document.getElementById('exportBtn').addEventListener('click', () => {
     const backup = { version: 3, exportedAt: new Date().toISOString(), purchases, sales, currency, currentDollarRate, sortMode };
     const blob = new Blob([JSON.stringify(backup, null, 2)], { type: 'application/json' });
@@ -1119,17 +1081,15 @@ PEPE	100	0.0000098"></textarea>
     const a = document.createElement('a');
     const dateStr = new Date().toISOString().slice(0,10);
     a.href = url;
-    a.download = 'backup-rastreador-cripto-' + dateStr + '.json';
+    a.download = 'backup-carteira-cripto-' + dateStr + '.json';
     document.body.appendChild(a);
     a.click();
     document.body.removeChild(a);
     URL.revokeObjectURL(url);
   });
-
   document.getElementById('importBackupBtn').addEventListener('click', () => {
     document.getElementById('importBackupFile').click();
   });
-
   document.getElementById('importBackupFile').addEventListener('change', (e) => {
     const file = e.target.files[0];
     if (!file) return;
@@ -1137,18 +1097,20 @@ PEPE	100	0.0000098"></textarea>
     reader.onload = () => {
       try {
         const backup = JSON.parse(reader.result);
-        if (!Array.isArray(backup.purchases)) throw new Error('formato inválido');
-        const backupSales = Array.isArray(backup.sales) ? backup.sales : [];
+        if (!backup || !Array.isArray(backup.purchases)) throw new Error('formato inválido');
+        const cleanPurchases = sanitizeList(backup.purchases, sanitizePurchase);
+        const cleanSales = sanitizeList(backup.sales, sanitizeSale);
+        const exportedDay = (typeof backup.exportedAt === 'string') ? backup.exportedAt.slice(0,10) : 'data desconhecida';
         const action = confirm(
           'carregar este backup vai SUBSTITUIR todos os dados salvos agora neste navegador (' + purchases.length + ' compra(s) e ' + sales.length + ' venda(s) atuais).\n\n' +
-          'o arquivo tem ' + backup.purchases.length + ' compra(s) e ' + backupSales.length + ' venda(s), de ' + (backup.exportedAt ? backup.exportedAt.slice(0,10) : 'data desconhecida') + '.\n\n' +
+          'o arquivo tem ' + cleanPurchases.length + ' compra(s) e ' + cleanSales.length + ' venda(s) válidas, de ' + exportedDay + '.\n\n' +
           'quer continuar?'
         );
         if (!action) return;
-        purchases = backup.purchases;
-        sales = backupSales;
+        purchases = cleanPurchases;
+        sales = cleanSales;
         if (backup.currency === 'USDT' || backup.currency === 'BRL') currency = backup.currency;
-        if (typeof backup.currentDollarRate === 'number') currentDollarRate = backup.currentDollarRate;
+        if (typeof backup.currentDollarRate === 'number' && isFinite(backup.currentDollarRate) && backup.currentDollarRate > 0) currentDollarRate = backup.currentDollarRate;
         if (backup.sortMode === 'alpha' || backup.sortMode === 'usdt') sortMode = backup.sortMode;
         save(); saveSales(); saveCurrency(); saveRate(); saveSort();
         document.getElementById('sortSelect').value = sortMode;
@@ -1161,13 +1123,11 @@ PEPE	100	0.0000098"></textarea>
     };
     reader.readAsText(file);
   });
-
   document.getElementById('clearAllBtn').addEventListener('click', () => {
     if (confirm('apagar todas as compras e vendas registradas? essa ação não pode ser desfeita.')) {
       purchases = []; sales = []; save(); saveSales(); render();
     }
   });
-
   document.getElementById('currencyToggle').addEventListener('click', (e) => {
     const btn = e.target.closest('button[data-cur]');
     if (!btn) return;
@@ -1175,14 +1135,12 @@ PEPE	100	0.0000098"></textarea>
     saveCurrency();
     render();
   });
-
   document.getElementById('currentDollarRate').addEventListener('change', (e) => {
     const val = parseFloat(e.target.value.replace(',', '.'));
     currentDollarRate = isFinite(val) && val > 0 ? val : null;
     saveRate();
     render();
   });
-
   document.getElementById('coinSearch').addEventListener('input', (e) => {
     searchTerm = e.target.value;
     render();
@@ -1190,15 +1148,12 @@ PEPE	100	0.0000098"></textarea>
     el.focus();
     el.setSelectionRange(el.value.length, el.value.length);
   });
-
   document.getElementById('sortSelect').addEventListener('change', (e) => {
     sortMode = e.target.value;
     saveSort();
     render();
   });
-
   document.getElementById('updateAllBtn').addEventListener('click', () => fetchAllPrices(false));
-
   load();
   try {
     const savedSort = localStorage.getItem(SORT_KEY);
@@ -1208,7 +1163,7 @@ PEPE	100	0.0000098"></textarea>
     }
   } catch(e){}
   render();
-  fetchAllPrices(true); // busca automática silenciosa ao abrir a página
+  fetchAllPrices(true);
 })();
 </script>
 </body>
