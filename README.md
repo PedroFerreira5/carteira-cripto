@@ -1,39 +1,39 @@
-# Rastreador de Compras — Cripto
+# Carteira Cripto
 
-Eu estava com dificuldade de acompanhar meus resultados em cripto — fazia várias compras em momentos diferentes, com preços diferentes, e ficava difícil saber se estava ganhando ou perdendo em cada uma. Resolvi criar essa ferramenta para resolver isso, permitindo controlar tanto os ativos em carteira quanto os lucros/prejuízos já realizados de vendas efetuadas.
+Eu estava com dificuldade de acompanhar meus resultados em cripto: fazia várias compras em momentos diferentes, com preços diferentes, e ficava difícil saber se estava ganhando ou perdendo em cada uma. Criei essa ferramenta para resolver isso, controlando tanto os ativos em carteira quanto os lucros e prejuízos já realizados nas vendas.
 
 🔗 **Acesse:** [https://pedroferreira5.github.io/rastreador-cripto/](https://pedroferreira5.github.io/rastreador-cripto/)
 
 ---
 
-##   O que faz
+## 📌 O que faz
 
-###   Gestão de Compras & Carteira
-- **Cadastro individual de compras:** você informa o gasto em USDT, o preço pago e, opcionalmente, taxas e cotação do dólar (USD/BRL). A quantidade adquirida é calculada automaticamente.
-- **Cálculo de Preço Médio (PM):** calcula automaticamente o preço médio ponderado por moeda, incorporando as taxas pagas no custo base do ativo.
-- **Break-even:** exibe o valor unitário exato de venda necessário para empatar o investimento (já considerando taxas).
-- **Simulador de Preço de Venda:** permite digitar um preço hipotético para simular o valor exato a receber, lucro/prejuízo e percentual de retorno antes de realizar a ordem.
-- **Resultado detalhado por ordem:** mostra o custo, valor atual e resultado não realizado ($ e %) de cada compra individual e do consolidado da moeda.
+### 💼 Gestão de compras e carteira
+- **Cadastro individual de compras:** informe o gasto em USDT, o preço pago e, opcionalmente, a taxa e a cotação do dólar (USD/BRL). A quantidade adquirida é calculada automaticamente.
+- **Preço médio (PM):** calcula o preço médio ponderado por moeda, incorporando as taxas pagas no custo base do ativo.
+- **Break-even:** mostra o valor unitário de venda necessário para empatar o investimento, já considerando as taxas.
+- **Simulador de venda:** digite um preço hipotético e veja o valor a receber, o lucro ou prejuízo e o percentual de retorno antes de realizar a ordem.
+- **Resultado por ordem:** custo, valor atual e resultado não realizado ($ e %) de cada compra e do consolidado da moeda.
 
-###   Registro & Histórico de Vendas
-- **Registrar vendas parciais ou totais:** abate o saldo disponível em carteira usando o Preço Médio (PM) atual para apurar o **Lucro/Prejuízo Realizado**.
-- **Histórico e Filtros por Mês:** tabela dedicada ao histórico de vendas, com filtro por período e recalculo automático do resultado acumulado caso novas compras alterem o PM histórico.
+### 💸 Vendas e histórico
+- **Vendas parciais ou totais:** abate o saldo disponível e apura o **lucro/prejuízo realizado** usando o preço médio (PM) da moeda.
+- **Histórico com filtro por mês:** tabela dedicada às vendas, com resultado do período selecionado. O lucro realizado é recalculado automaticamente se novas compras alterarem o PM.
 
-###   Cotações & Câmbio Multi-Moedas
-- **Alternância de Moeda (USDT / BRL):** alterne toda a visualização do painel entre dólar (USDT) e reais (R$).
-- **Cotação do Dólar em tempo real:** permite definir a taxa USD/BRL atual para atualizar o valor de mercado de todas as posições em Reais.
-- **Preço Atual via Binance:** busca cotações automáticas dos pares contra USDT na API pública da Binance ao abrir a página, por botão individual ou geral.
+### 💱 Cotações e câmbio
+- **Alternância USDT / BRL:** troque toda a visualização entre dólar (USDT) e reais (R$).
+- **Cotação do dólar informada por você:** defina a taxa USD/BRL de hoje para converter o valor de mercado das posições para reais. Cada compra e venda também pode guardar o câmbio do dia.
+- **Preço atual via Binance:** busca os pares contra USDT na API pública da Binance ao abrir a página, por botão individual ou geral. Se a busca falhar, você pode preencher o preço manualmente.
 
-###   Organização & Importação
-- **Busca e Ordenação:** campo para filtrar moedas pelo nome e opções de ordenação (alfabética ou por maior volume investido).
-- **Importação em Massa:** cole múltiplas compras direto de planilhas (Excel ou Google Sheets).
-- **Exportação CSV & Backup JSON:** exporte todo o seu histórico formatado para CSV ou faça backup completo dos seus dados para restauração rápida em qualquer navegador.
+### 🗂️ Organização e importação
+- **Busca e ordenação:** filtre moedas pelo nome e ordene por ordem alfabética ou por maior valor investido.
+- **Importação em massa:** cole várias compras direto do Excel ou Google Sheets.
+- **Exportação CSV e backup JSON:** exporte o histórico em CSV ou faça um backup completo para restaurar em outro navegador.
 
 ---
 
-##   Modelo de tabela para importação em massa
+## 📥 Modelo de tabela para importação em massa
 
-Na aba **📥 Importar Tabela**, cole suas compras no seguinte formato (colunas separadas por TAB ou vírgula):
+Na aba **Importar Tabela**, cole suas compras neste formato (colunas separadas por TAB ou vírgula, uma compra por linha):
 
 | Moeda | Usdt | Preco | Cambio | Data |
 | :--- | :--- | :--- | :--- | :--- |
@@ -41,47 +41,66 @@ Na aba **📥 Importar Tabela**, cole suas compras no seguinte formato (colunas 
 | ETH | 300 | 3200 | | 2026-05-02 |
 | PEPE | 100 | 0.0000098 | | |
 
-- **Moeda**: o ticker do ativo (ex: BTC, ETH, PEPE).
-- **Usdt**: valor total gasto em USDT.
-- **Preco**: preço unitário da moeda em USDT na data da compra.
-- **Cambio**: cotação USD/BRL na data da compra *(opcional)*.
-- **Data**: formato AAAA-MM-DD *(opcional)*.
+- **Moeda:** ticker do ativo (ex: BTC, ETH, PEPE).
+- **Usdt:** valor total gasto em USDT.
+- **Preco:** preço unitário da moeda, em USDT, na data da compra.
+- **Cambio:** cotação USD/BRL na data da compra *(opcional)*.
+- **Data:** formato AAAA-MM-DD *(opcional)*.
 
-*Nota: Selecione as células no Excel/Sheets (com ou sem cabeçalho) e cole diretamente na caixa de texto.*
-
----
-
-##   Armazenamento, Privacidade e Uso Offline
-
-Os dados ficam armazenados **exclusivamente no seu próprio navegador** via `localStorage`. Não existe backend, servidor central ou envio de informações financeiras.
-
-- **Privacidade Total:** Nenhuma informação sobre a sua carteira, compras ou valores é transmitida para terceiros. A única comunicação externa realizada pela página é a consulta pública à API da Binance para obter os preços unitários das criptomoedas.
-- **Uso Offline:** Você pode baixar o arquivo `index.html` e executá-lo diretamente no computador sem necessidade de internet (para atualizar os preços manualmente).
-- **Portabilidade:** Utilize os botões **"baixar backup"** e **"carregar backup"** no rodapé para transferir com segurança seus dados entre navegadores ou computadores.
+*Selecione as células na planilha (com ou sem cabeçalho) e cole direto na caixa de texto. A taxa não entra na importação em massa: se precisar dela, cadastre a compra manualmente.*
 
 ---
 
-##   Tecnologias Utilizadas
+## 🔒 Armazenamento, privacidade e segurança
 
-- **HTML5 & CSS3:** Design responsivo com CSS Grid, Flexbox, variáveis CSS e estilização nativa para modo escuro (*Dark Theme*).
-- **JavaScript Vanilla (ES6+):** Lógica desacoplada com manipulação do DOM e IIFE para proteção de escopo.
-- **API REST (Binance):** Requisições assíncronas (`fetch` / `async/await`) para obtenção de preços em tempo real.
-- **Manipulação de Arquivos:** Geração e leitura de payloads JSON para backup e formatação de arquivos CSV com suporte a UTF-8 BOM.
+Os dados ficam **exclusivamente no seu navegador**, via `localStorage`. Não existe backend, servidor central ou envio das suas informações financeiras.
 
----
-
-##   Como rodar localmente
-
-Não é necessário configurar servidores, NodeJS ou comandos de build:
-
-1. Faça o download do repositório ou salve o arquivo `index.html`.
-2. Dê dois cliques sobre o arquivo `index.html` para abri-lo em qualquer navegador moderno.
+- **Privacidade:** nenhum dado da sua carteira é transmitido a terceiros. As únicas requisições externas são a consulta pública de preços à API da Binance e o carregamento das fontes do Google Fonts (a página continua funcionando com fontes padrão se estiver sem internet).
+- **Uso offline:** você pode baixar o `index.html` e abri-lo direto no computador (os preços precisam ser preenchidos manualmente).
+- **Portabilidade:** use **baixar backup** e **carregar backup** no rodapé para levar seus dados entre navegadores ou computadores.
+- **Proteção contra XSS:** todo texto vindo do usuário (nome da moeda, busca, datas, mensagens de importação) é escapado antes de ser inserido na página.
+- **Validação de dados:** o conteúdo do `localStorage` e dos arquivos de backup é validado e normalizado ao carregar. Registros inválidos são descartados em vez de quebrar a tela.
+- **CSV seguro:** a exportação neutraliza textos que começam com `=`, `+`, `-` ou `@`, evitando injeção de fórmulas ao abrir no Excel.
 
 ---
 
-## ⚠️ Aviso Legal / Disclaimer
+## 🛠️ Tecnologias
 
-Esta ferramenta foi desenvolvida exclusivamente para fins de organização pessoal e controle financeiro.
+- **HTML5 e CSS3:** layout responsivo com CSS Grid, Flexbox, variáveis CSS e tema escuro.
+- **JavaScript puro (ES6+):** sem frameworks nem dependências, em arquivo único, com IIFE para isolar o escopo.
+- **API REST (Binance):** requisições assíncronas (`fetch` / `async/await`) para os preços.
+- **Arquivos:** geração e leitura de JSON para backup e exportação de CSV com UTF-8 BOM e separador compatível com o Excel em português.
 
-- **Sem recomendações:** Os valores, cálculos e projeções exibidos não constituem recomendação de investimento, compra ou venda de criptoativos.
-- **Precisão das cotações:** As cotações automáticas dependem da API pública da Binance e podem apresentar oscilações ou atrasos de mercado. Confirme sempre suas operações na sua corretora (*exchange*).
+---
+
+## ▶️ Como rodar localmente
+
+Não precisa de servidor, Node.js nem build:
+
+1. Baixe o repositório ou salve o arquivo `index.html`.
+2. Dê dois cliques no arquivo para abrir em qualquer navegador moderno.
+
+---
+
+## 🧠 Decisões de projeto e limitações
+
+- **Custo da venda usa o PM atual da moeda**, e não um método por lote (como FIFO). Por isso, cadastrar uma compra nova altera retroativamente o lucro realizado das vendas anteriores. É uma escolha deliberada de simplicidade e está explicada na própria tela.
+- **Taxas de compra entram no custo base**, ou seja, no PM e no break-even. Taxas de venda são descontadas do valor recebido.
+- **Preço atual por moeda:** hoje o preço atual é replicado dentro de cada compra. Um mapa único por moeda seria mais enxuto.
+- **Sem testes automatizados** para a lógica de cálculo (PM, lucro realizado e não realizado). É o principal ponto a evoluir.
+- **Câmbio:** quando uma compra ou venda não tem cotação informada, o app usa a cotação de hoje e, na falta dela, o câmbio médio das compras da moeda como aproximação.
+
+### Próximos passos
+- Testes unitários para as funções de cálculo.
+- Preço atual centralizado por moeda.
+- Gráficos de evolução da carteira.
+
+---
+
+## ⚠️ Aviso legal
+
+Esta ferramenta foi desenvolvida para organização e controle pessoal, com fins informativos.
+
+- **Sem recomendações:** os valores, cálculos e simulações exibidos não constituem recomendação de investimento, compra ou venda de criptoativos.
+- **Não é cálculo de imposto:** o app não substitui a apuração oficial de ganho de capital nem a declaração de imposto de renda. Consulte um contador se necessário.
+- **Precisão das cotações:** as cotações automáticas dependem da API pública da Binance e podem sofrer atrasos ou oscilações. Confirme sempre suas operações na sua corretora (*exchange*).
