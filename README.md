@@ -2,7 +2,7 @@
 
 Eu estava com dificuldade de acompanhar meus resultados em cripto: fazia várias compras em momentos diferentes, com preços diferentes, e ficava difícil saber se estava ganhando ou perdendo em cada uma. Criei essa ferramenta para resolver isso, controlando tanto os ativos em carteira quanto os lucros e prejuízos já realizados nas vendas.
 
-🔗 **Acesse:** [https://pedroferreira5.github.io/rastreador-cripto/](https://pedroferreira5.github.io/rastreador-cripto/)
+🔗 **Acesse:** [https://pedroferreira5.github.io/rastreador-cripto/](https://pedroferreira5.github.io/carteira-cripto/)
 
 ---
 
