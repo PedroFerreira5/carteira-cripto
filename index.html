@@ -364,10 +364,11 @@
     </div>
   </header>
 
+  <div id="dataNotice" role="status" hidden style="border:1px solid var(--line-strong); padding:12px; margin-bottom:18px; color:var(--paper);"></div>
   <div id="storageWarning" role="status" hidden style="border:1px solid var(--line-strong); padding:12px; margin-bottom:18px; color:var(--paper);"></div>
   <div class="rate-bar">
-    <span>cotação do dólar hoje (USD/BRL)</span>
-    <input type="number" step="any" id="currentDollarRate" placeholder="5.30">
+    <span>cotação USDT/BRL hoje</span>
+    <input aria-label="Cotação USDT/BRL hoje; também aceita cotação do dólar informada manualmente" type="text" inputmode="decimal" id="currentDollarRate" title="Use vírgula para decimais: digite 5,50. O valor 5.500 é lido como 5500." placeholder="5.30">
     <button class="btn btn-ghost fetch-btn" id="fetchRateBtn" type="button">buscar da Binance</button>
   </div>
   <div class="rate-hint" id="rateHint" style="font-size:11px; color:var(--paper-dim); text-align:right; margin-top:-18px; margin-bottom:18px;"></div>
@@ -391,19 +392,19 @@
           </div>
           <div class="field">
             <label for="f-usdt">USDT gasto</label>
-            <input id="f-usdt" type="number" step="any" placeholder="500">
+            <input id="f-usdt" type="text" inputmode="decimal" placeholder="500">
           </div>
           <div class="field">
             <label for="f-price">Preço da moeda (USDT)</label>
-            <input id="f-price" type="number" step="any" placeholder="67000">
+            <input id="f-price" type="text" inputmode="decimal" placeholder="67000">
           </div>
           <div class="field">
             <label for="f-fee">Taxa (USDT) — opcional</label>
-            <input id="f-fee" type="number" step="any" placeholder="0.50">
+            <input id="f-fee" type="text" inputmode="decimal" placeholder="0.50">
           </div>
           <div class="field">
             <label for="f-rate">Cotação do dólar na compra</label>
-            <input id="f-rate" type="number" step="any" placeholder="5.30">
+            <input id="f-rate" type="text" inputmode="decimal" placeholder="5.30">
           </div>
           <div class="field">
             <label for="f-date">Data</label>
@@ -418,7 +419,7 @@
       <div class="tab-panel" data-panel="import">
         <div class="sub" style="margin-bottom:14px;">
           Cole linhas no formato: <strong>moeda&nbsp;&nbsp;usdt gasto&nbsp;&nbsp;preço&nbsp;&nbsp;câmbio (opcional)&nbsp;&nbsp;data (opcional, AAAA-MM-DD)</strong><br>
-          Funciona colando direto do Excel/Google Sheets (colunas separadas por tab), ou com vírgula entre os valores. Uma compra por linha. (Taxa não entra na importação em massa — adicione manualmente se precisar.)
+          Funciona colando direto do Excel/Google Sheets (colunas separadas por tab), ou com ponto e vírgula entre os valores (também aceita vírgula como separador de colunas quando os números não usam vírgula decimal). Uma compra por linha. Use vírgula para decimais; ponto com exatamente 3 dígitos depois (ex.: 5.500) é lido como milhar. (Taxa não entra na importação em massa — adicione manualmente se precisar.)
         </div>
         <textarea id="importText" rows="6" placeholder="BTC	500	350000	5.30	2026-03-10
 ETH	300	18500		2026-05-02
@@ -438,19 +439,20 @@ PEPE	100	0.0000098"></textarea>
           </div>
           <div class="field">
             <label for="s-qty">Quantidade vendida</label>
-            <input id="s-qty" type="number" step="any" placeholder="0.01">
+            <input id="s-qty" type="text" inputmode="decimal" placeholder="0.01">
+            <button type="button" class="btn btn-ghost" id="sellAllBtn">vender tudo</button>
           </div>
           <div class="field">
             <label for="s-price">Preço de venda (USDT)</label>
-            <input id="s-price" type="number" step="any" placeholder="70000">
+            <input id="s-price" type="text" inputmode="decimal" placeholder="70000">
           </div>
           <div class="field">
             <label for="s-fee">Taxa (USDT) — opcional</label>
-            <input id="s-fee" type="number" step="any" placeholder="0.50">
+            <input id="s-fee" type="text" inputmode="decimal" placeholder="0.50">
           </div>
           <div class="field">
             <label for="s-rate">Cotação do dólar na venda</label>
-            <input id="s-rate" type="number" step="any" placeholder="5.30">
+            <input id="s-rate" type="text" inputmode="decimal" placeholder="5.30">
           </div>
           <div class="field">
             <label for="s-date">Data</label>
@@ -474,6 +476,7 @@ PEPE	100	0.0000098"></textarea>
     </select>
     <button class="btn btn-ghost" id="updateAllBtn" type="button">atualizar todos os preços</button>
   </div>
+  <div id="priceUpdateHint" class="section-hint"></div>
   <div class="section-hint">
     <button type="button" class="help-trigger" id="tableHelpBtn"><span aria-hidden="true">ⓘ</span> como ler as tabelas de compras</button>
   </div>
@@ -497,7 +500,7 @@ PEPE	100	0.0000098"></textarea>
       <button class="btn btn-ghost" id="exportBtn">baixar backup</button>
       <button class="btn btn-ghost" id="importBackupBtn">carregar backup</button>
       <input type="file" id="importBackupFile" accept="application/json" style="display:none;">
-      <button class="btn btn-ghost" id="clearAllBtn">apagar tudo</button>
+      <button class="btn btn-ghost" id="clearAllBtn">apagar esta carteira</button>
     </div>
   </footer>
   <p class="disclaimer">
@@ -519,18 +522,18 @@ PEPE	100	0.0000098"></textarea>
       <ol>
         <li><strong>Carteiras.</strong> Use as abas no topo para separar suas compras, por exemplo, uma carteira para você e outra para um familiar. Você pode criar, renomear, excluir e escolher a cor de cada carteira.</li>
         <li><strong>Registrar uma compra.</strong> Em “+ Nova Compra”, informe a moeda, quanto gastou em USDT e o preço pago. Taxa, cotação do dólar na compra e data são opcionais. A quantidade é calculada sozinha.</li>
-        <li><strong>Várias compras de uma vez.</strong> Em “Importar Tabela”, cole linhas do Excel ou Google Sheets com moeda, USDT gasto, preço, câmbio e data.</li>
-        <li><strong>Preços atuais.</strong> O site busca os preços na Binance ao abrir. Use “buscar preço” em uma moeda ou “atualizar todos os preços”. Se a busca falhar, preencha o preço à mão.</li>
+        <li><strong>Várias compras de uma vez.</strong> Em “Importar Tabela”, cole linhas do Excel ou Google Sheets com moeda, USDT gasto, preço, câmbio e data. Prefira vírgula nos decimais: 5,50 representa cinco e meio, enquanto 5.500 é interpretado como cinco mil e quinhentos.</li>
+        <li><strong>Preços atuais.</strong> O site busca os preços na Binance ao abrir. Use “buscar preço” em uma moeda ou “atualizar todos os preços”. Se a busca falhar, preencha o preço à mão. Preços informados manualmente ficam salvos até você pedir uma nova busca pelo botão.</li>
         <li><strong>Simular uma venda.</strong> Em cada moeda, digite um preço em “vender a” para ver quanto receberia e o lucro ou prejuízo, sem registrar uma venda.</li>
         <li><strong>Registrar uma venda de verdade.</strong> Em “Registrar Venda”, informe quantidade, preço e, se quiser, taxa. O lucro realizado aparece no histórico de vendas, que pode ser filtrado por mês.</li>
-        <li><strong>USDT ou R$.</strong> O botão no topo troca a visualização. Para ver em reais, confira a cotação de hoje, buscada automaticamente na Binance. Você também pode informá-la manualmente.</li>
+        <li><strong>USDT ou R$.</strong> O botão no topo troca a visualização. Para ver em reais, confira a cotação USDT/BRL de hoje, buscada automaticamente na Binance. O campo também aceita a cotação do dólar informada à mão.</li>
         <li><strong>Seus dados.</strong> As compras e vendas ficam apenas neste navegador. As consultas de preços são feitas à Binance. Use “baixar backup” de vez em quando e “carregar backup” para levar os dados a outro navegador ou computador. Se limpar os dados do navegador, os registros somem.</li>
         <li><strong>Aviso.</strong> Ferramenta informativa, sem recomendação de investimento e sem cálculo oficial de imposto de renda.</li>
       </ol>
       <button type="button" class="btn" id="startHelpBtn" hidden>entendi, começar</button>
     </section>
     <section id="helpTables" role="tabpanel" aria-labelledby="helpTablesTab" tabindex="0" hidden>
-      <p><strong>Investido</strong> já inclui a taxa da operação, quando informada.</p>
+      <p><strong>Investido</strong> já inclui a taxa da operação, quando informada. Em reais, compras sem câmbio próprio usam a média das compras da moeda; se essa média faltar, usam a cotação de hoje. O valor atual usa a cotação de hoje, com os câmbios das compras como aproximação quando necessário.</p>
       <p><strong>Valor atual</strong> e <strong>Resultado</strong> de cada compra seguem o preço simulado no campo “vender a ___ USDT” de cada moeda, ou o preço atual real quando você não estiver simulando.</p>
     </section>
   </div>
@@ -602,9 +605,64 @@ PEPE	100	0.0000098"></textarea>
     return (window.CSS && CSS.escape) ? CSS.escape(String(s)) : String(s).replace(/["\\]/g, '\\$&');
   }
   function uid(){ return Math.random().toString(36).slice(2, 10); }
+  function parseLocaleNumber(value){
+    let text = String(value ?? '').replace(/\s/g, '');
+    if (!text || !/^[+-]?[\d.,]+$/.test(text)) return NaN;
+    if (text.includes(',') && text.includes('.')) {
+      const decimal = text.lastIndexOf(',') > text.lastIndexOf('.') ? ',' : '.';
+      text = text.replaceAll(decimal === ',' ? '.' : ',', '').replace(decimal, '.');
+    } else if (text.includes(',')) {
+      text = text.replace(',', '.');
+    } else if ((text.match(/\./g) || []).length > 1 || /^[+-]?[1-9]\d{0,2}(\.\d{3})+$/.test(text)) {
+      if (!/^[+-]?\d{1,3}(\.\d{3})+$/.test(text)) return NaN;
+      text = text.replaceAll('.', '');
+    }
+    if (!/^[+-]?(?:\d+(?:\.\d*)?|\.\d+)$/.test(text)) return NaN;
+    const number = Number(text);
+    return Number.isFinite(number) ? number : NaN;
+  }
+  function qtyTolerance(reference){ return Math.max(1e-9, Math.abs(reference) * 1e-9); }
+  function inputNumber(value){
+    const text = Number(value).toLocaleString('en-US', { useGrouping: false, maximumFractionDigits: 20 });
+    return /^[1-9]\d{0,2}\.\d{3}$/.test(text) ? text + '0' : text;
+  }
+  function inheritedPrice(coin, fallback){
+    const existing = purchases.filter(p => p.coin === coin).sort((a,b) => (b.date || '').localeCompare(a.date || ''));
+    return existing.length ? existing[0].currentPrice : fallback;
+  }
+  const priceUpdatedAt = new Map();
+  let validationReport = { corrected: 0, discarded: 0, wallets: 0 };
+  let writesBlocked = false;
+  let recoveryCopy = null;
+  function showDataNotice(message){
+    const el = document.getElementById('dataNotice');
+    el.textContent = message;
+    el.hidden = false;
+    if (recoveryCopy) {
+      const button = document.createElement('button');
+      button.type = 'button';
+      button.className = 'btn btn-ghost';
+      button.textContent = 'baixar cópia preservada';
+      button.addEventListener('click', () => {
+        const blob = new Blob([recoveryCopy.raw], { type: 'application/json' });
+        const url = URL.createObjectURL(blob);
+        const link = document.createElement('a');
+        link.href = url;
+        link.download = recoveryCopy.key + '.json';
+        document.body.appendChild(link);
+        link.click();
+        link.remove();
+        URL.revokeObjectURL(url);
+      });
+      el.appendChild(document.createTextNode(' '));
+      el.appendChild(button);
+    }
+  }
   function toNum(v){ const n = Number(v); return isFinite(n) ? n : null; }
   function sanitizeDate(d){
-    return (typeof d === 'string' && /^\d{4}-\d{2}-\d{2}$/.test(d)) ? d : '';
+    if (typeof d !== 'string' || !/^\d{4}-\d{2}-\d{2}$/.test(d)) return '';
+    const date = new Date(d + 'T00:00:00Z');
+    return Number.isFinite(date.getTime()) && date.toISOString().slice(0,10) === d ? d : '';
   }
   function sanitizePurchase(p){
     if (!p || typeof p !== 'object') return null;
@@ -615,10 +673,11 @@ PEPE	100	0.0000098"></textarea>
     return {
       id: String(p.id || uid()).slice(0, 40),
       coin, usdtSpent, price,
-      qty: qty > 0 ? qty : usdtSpent / price,
+      qty: qty > 0 && Math.abs(qty - usdtSpent / price) <= (usdtSpent / price) * .001 ? qty : usdtSpent / price,
       fee: fee > 0 ? fee : null,
       dollarRate: rate > 0 ? rate : null,
       currentPrice: cur > 0 ? cur : price,
+      ...(p.currentPriceManual === true ? { currentPriceManual: true } : {}),
       date: sanitizeDate(p.date)
     };
   }
@@ -636,8 +695,18 @@ PEPE	100	0.0000098"></textarea>
       date: sanitizeDate(s.date)
     };
   }
-  function sanitizeList(arr, fn){
-    return Array.isArray(arr) ? arr.map(fn).filter(Boolean) : [];
+  function sanitizeList(arr, fn, ids = new Set()){
+    if (!Array.isArray(arr)) return [];
+    const result = [];
+    arr.forEach(original => {
+      const clean = fn(original);
+      if (!clean) { validationReport.discarded++; return; }
+      while (ids.has(clean.id)) clean.id = uid();
+      ids.add(clean.id);
+      if (Object.keys(clean).some(key => clean[key] !== original[key])) validationReport.corrected++;
+      result.push(clean);
+    });
+    return result;
   }
   function makeWallet(name, purchases = [], sales = []){
     let id;
@@ -646,24 +715,56 @@ PEPE	100	0.0000098"></textarea>
   }
   function cleanWalletData(data){
     if (!data || !Array.isArray(data.wallets) || !data.wallets.length) return null;
-    const ids = new Set();
-    const names = new Set();
-    const cleanWallets = [];
+    const ids = new Set(), names = new Set(), cleanWallets = [];
     for (const wallet of data.wallets) {
-      if (!wallet || typeof wallet.id !== 'string' || !wallet.id.trim() ||
-          typeof wallet.name !== 'string' || !Array.isArray(wallet.purchases) || !Array.isArray(wallet.sales)) return null;
-      const name = wallet.name.trim();
-      const nameKey = name.toLowerCase();
-      if (!name || Array.from(name).length > 40 || ids.has(wallet.id) || names.has(nameKey)) return null;
-      ids.add(wallet.id);
-      names.add(nameKey);
+      if (!wallet || typeof wallet.name !== 'string' || !wallet.name.trim() ||
+          !Array.isArray(wallet.purchases) || !Array.isArray(wallet.sales)) {
+        validationReport.wallets++;
+        continue;
+      }
+      let id = typeof wallet.id === 'string' && wallet.id.trim() ? wallet.id : uid();
+      while (ids.has(id)) id = uid();
+      ids.add(id);
+      const base = Array.from(wallet.name.trim()).slice(0,40).join('');
+      let name = base, suffix = 2;
+      while (names.has(name.toLowerCase())) {
+        const ending = ' (' + suffix++ + ')';
+        name = Array.from(base).slice(0,40-ending.length).join('') + ending;
+      }
+      names.add(name.toLowerCase());
+      const recordIds = new Set();
       cleanWallets.push({
-        id: wallet.id, name, color: sanitizeWalletColor(wallet.color),
-        purchases: sanitizeList(wallet.purchases, sanitizePurchase),
-        sales: sanitizeList(wallet.sales, sanitizeSale)
+        id, name, color: sanitizeWalletColor(wallet.color),
+        purchases: sanitizeList(wallet.purchases, sanitizePurchase, recordIds),
+        sales: sanitizeList(wallet.sales, sanitizeSale, recordIds)
       });
     }
-    return { wallets: cleanWallets, activeId: ids.has(data.activeId) ? data.activeId : cleanWallets[0].id };
+    if (!cleanWallets.length) return null;
+    return { wallets: cleanWallets, activeId: cleanWallets.some(w => w.id === data.activeId) ? data.activeId : cleanWallets[0].id };
+  }
+  function loadWalletData(){
+    const raw = readStorage(WALLETS_KEY);
+    validationReport = { corrected: 0, discarded: 0, wallets: 0 };
+    if (raw === null) return null;
+    let parsed, clean;
+    try { parsed = JSON.parse(raw); clean = cleanWalletData(parsed); } catch(e){}
+    const repaired = !clean || validationReport.wallets || validationReport.discarded ||
+      validationReport.corrected || (clean && parsed.wallets.some((w,i) =>
+        w.id !== clean.wallets[i]?.id || w.name !== clean.wallets[i]?.name));
+    if (repaired) {
+      try {
+        const key = 'crypto-tracker-wallets-recovery-' + Date.now() + '-' + uid();
+        localStorage.setItem(key, raw);
+        recoveryCopy = {key, raw};
+        showDataNotice('Dados originais preservados para recuperação em ' + key +
+          '. Carteiras descartadas: ' + validationReport.wallets + '. Registros corrigidos: ' +
+          validationReport.corrected + '; descartados: ' + validationReport.discarded + '.');
+      } catch(e) {
+        writesBlocked = true;
+        showDataNotice('Não foi possível preservar os dados originais. Gravações bloqueadas para evitar sobrescrevê-los. Baixe um backup dos dados em memória.');
+      }
+    }
+    return clean || null;
   }
   let currencyFallbackNotice = '';
   function storageWarning(failed){
@@ -673,7 +774,7 @@ PEPE	100	0.0000098"></textarea>
   }
   function readStorage(key){
     try { return localStorage.getItem(key); }
-    catch(e){ storageWarning(true); return null; }
+    catch(e){ writesBlocked = true; storageWarning(true); return null; }
   }
   function findBalanceIssues(list){
     const issues = [];
@@ -681,7 +782,7 @@ PEPE	100	0.0000098"></textarea>
       new Set(wallet.sales.map(sale => sale.coin)).forEach(coin => {
         const bought = wallet.purchases.filter(p => p.coin === coin).reduce((sum, p) => sum + p.qty, 0);
         const sold = wallet.sales.filter(s => s.coin === coin).reduce((sum, s) => sum + s.qty, 0);
-        if (sold - bought > 1e-9) issues.push({ walletId: wallet.id, coin });
+        if (sold - bought > qtyTolerance(Math.max(bought, sold))) issues.push({ walletId: wallet.id, coin });
       });
     });
     return issues;
@@ -695,7 +796,7 @@ PEPE	100	0.0000098"></textarea>
     sales = wallet.sales;
   }
   function load(){
-    const stored = cleanWalletData(readJson(WALLETS_KEY));
+    const stored = loadWalletData();
     if (stored) {
       wallets = stored.wallets;
       bindWallet(wallets.find(wallet => wallet.id === stored.activeId));
@@ -711,6 +812,7 @@ PEPE	100	0.0000098"></textarea>
     try { setRateMetadata(readStorage(RATE_SOURCE_KEY), Number(readStorage(RATE_UPDATED_KEY))); } catch(e){}
   }
   function save(){
+    if (writesBlocked) { storageWarning(true); return false; }
     try {
       localStorage.setItem(WALLETS_KEY, JSON.stringify({ activeId: activeWallet.id, wallets }));
       localStorage.setItem(CUR_KEY, currency);
@@ -762,6 +864,7 @@ PEPE	100	0.0000098"></textarea>
     save();
     renderWalletTabs();
     render();
+    fetchAllPrices(true);
   }
   const walletDialog = document.getElementById('walletDialog');
   const walletName = document.getElementById('walletName');
@@ -849,9 +952,15 @@ PEPE	100	0.0000098"></textarea>
   }
   function saveRate(){ return save(); }
   function renderRateHint(){
-    const messages = currencyFallbackNotice ? [currencyFallbackNotice] : [];
+    if (currentDollarRate) currencyFallbackNotice = '';
+    const messages = currency !== 'BRL' && currencyFallbackNotice ? [currencyFallbackNotice] : [];
     if (currency === 'BRL' && !currentDollarRate) {
-      messages.push('sem cotação de hoje preenchida — usando o câmbio das compras como aproximação para "valor atual"');
+      const coins = new Set([...purchases, ...sales].map(item => item.coin));
+      const enoughRates = coins.size > 0 && Array.from(coins).every(coin =>
+        purchases.some(p => p.coin === coin && p.dollarRate > 0));
+      messages.push(enoughRates
+        ? 'sem cotação de hoje preenchida; usando o câmbio das compras como aproximação para o valor atual'
+        : 'faltam cotações para converter alguns valores, que aparecem como —. informe a cotação ou busque na Binance');
     }
     if (rateSource && rateUpdatedAt) {
       const date = new Date(rateUpdatedAt);
@@ -882,6 +991,7 @@ PEPE	100	0.0000098"></textarea>
       document.getElementById('currentDollarRate').value = price;
       render();
     } catch(e){
+      if (revision === rateRevision) { applyCurrencyFallback(); render(); }
       if (!silent && revision === rateRevision) {
         alert('não foi possível buscar a cotação USDT/BRL automaticamente.\n\n' +
           FETCH_FAIL_HINT + '\n\nvocê pode preencher a cotação manualmente.');
@@ -922,6 +1032,7 @@ PEPE	100	0.0000098"></textarea>
     return exchangeRate > 0 ? usdtValue * exchangeRate : NaN;
   }
   function resultPhrase(gain, positive, negative, neutral){
+    if (!Number.isFinite(gain)) return '—';
     if (gain === 0) return neutral;
     return (gain > 0 ? positive : negative) + ' ' + fmtMoney(Math.abs(gain));
   }
@@ -937,7 +1048,8 @@ PEPE	100	0.0000098"></textarea>
     const ratedSpent = ratedPurchases.reduce((s,p) => s + p.usdtSpent, 0);
     const avgBuyRate = ratedSpent > 0 ? ratedPurchases.reduce((s,p) => s + p.usdtSpent*p.dollarRate, 0) / ratedSpent : null;
     const qtySold = coinSales.reduce((s,x) => s + x.qty, 0);
-    const qtyRemaining = Math.max(0, qtyBought - qtySold);
+    const rawRemaining = Math.max(0, qtyBought - qtySold);
+    const qtyRemaining = rawRemaining <= qtyTolerance(qtyBought) ? 0 : rawRemaining;
     const currentPrice = coinPurchases.length ? (coinPurchases[0].currentPrice ?? coinPurchases[0].price) : 0;
     const costRemainingUSDT = qtyRemaining * avgPrice;
     const valueRemainingUSDT = qtyRemaining * currentPrice;
@@ -955,13 +1067,13 @@ PEPE	100	0.0000098"></textarea>
       const receivedDisplay = toDisplay(netReceivedUSDT, saleRate);
       const feeDisplay = toDisplay(saleFee, saleRate);
       const gainDisplay = receivedDisplay - costDisplay;
-      const pct = costDisplay > 0 ? (gainDisplay / costDisplay) * 100 : 0;
+      const pct = costDisplay > 0 ? (gainDisplay / costDisplay) * 100 : (Number.isFinite(costDisplay) ? 0 : NaN);
       return { ...s, costUSDT, grossReceivedUSDT, netReceivedUSDT, gainUSDT, costDisplay, receivedDisplay, feeDisplay, gainDisplay, pct };
     });
     const investedRemainingDisplay = toDisplay(costRemainingUSDT, avgBuyRate);
     const valueRemainingDisplay = toDisplay(valueRemainingUSDT, currentDollarRate || avgBuyRate);
     const unrealizedDisplay = valueRemainingDisplay - investedRemainingDisplay;
-    const unrealizedPct = investedRemainingDisplay > 0 ? (unrealizedDisplay / investedRemainingDisplay) * 100 : 0;
+    const unrealizedPct = investedRemainingDisplay > 0 ? (unrealizedDisplay / investedRemainingDisplay) * 100 : (Number.isFinite(investedRemainingDisplay) ? 0 : NaN);
     const realizedDisplay = saleDetails.reduce((s,d) => s + d.gainDisplay, 0);
     return {
       coin, coinPurchases, coinSales, qtyBought, usdtSpentGross, feesBuyTotal, avgPrice, avgBuyRate,
@@ -970,7 +1082,7 @@ PEPE	100	0.0000098"></textarea>
       saleDetails, realizedDisplay
     };
   }
-  function render(){
+  function applyCurrencyFallback(){
     if (currency === 'BRL') {
       currencyFallbackNotice = '';
       const coins = new Set([...purchases, ...sales].map(item => item.coin));
@@ -982,6 +1094,10 @@ PEPE	100	0.0000098"></textarea>
         saveCurrency();
       }
     }
+  }
+  function render(){
+    const updated = priceUpdatedAt.get(activeWallet.id);
+    document.getElementById('priceUpdateHint').textContent = updated ? 'preços atualizados em ' + new Date(updated).toLocaleTimeString('pt-BR', {hour:'2-digit', minute:'2-digit'}) : '';
     document.querySelectorAll('.currency-toggle button').forEach(b=>{
       b.classList.toggle('active', b.dataset.cur === currency);
     });
@@ -1007,7 +1123,7 @@ PEPE	100	0.0000098"></textarea>
       totalRealized += allStats[c].realizedDisplay;
     });
     const totalUnrealized = totalValueRemaining - totalInvestedRemaining;
-    const totalUnrealizedPct = totalInvestedRemaining > 0 ? (totalUnrealized / totalInvestedRemaining) * 100 : 0;
+    const totalUnrealizedPct = totalInvestedRemaining > 0 ? (totalUnrealized / totalInvestedRemaining) * 100 : (Number.isFinite(totalInvestedRemaining) ? 0 : NaN);
     document.getElementById('summary').innerHTML = `
       <div class="cell"><div class="label">custo em carteira</div><div class="value">${fmtMoney(totalInvestedRemaining)}</div></div>
       <div class="cell"><div class="label">valor atual</div><div class="value">${fmtMoney(totalValueRemaining)}</div></div>
@@ -1044,14 +1160,14 @@ PEPE	100	0.0000098"></textarea>
       const rows = st.coinPurchases;
       const zeroed = st.qtyRemaining <= 0;
       const coinH = escapeHtml(coin);
-      const simPriceRaw = simPrices[coin] !== undefined ? simPrices[coin] : String(st.currentPrice);
-      const simPrice = simPrices[coin] !== undefined ? parseFloat(simPrices[coin].replace(',', '.')) : st.currentPrice;
+      const simPriceRaw = simPrices[coin] !== undefined ? simPrices[coin] : inputNumber(st.currentPrice);
+      const simPrice = simPrices[coin] !== undefined ? parseLocaleNumber(simPrices[coin]) : st.currentPrice;
       const effectivePrice = (isFinite(simPrice) && simPrice > 0) ? simPrice : st.currentPrice;
       const rowsHtml = rows.map(p => {
-        const investedDisplay = toDisplay(p.usdtSpent + (p.fee || 0), p.dollarRate);
+        const investedDisplay = toDisplay(p.usdtSpent + (p.fee || 0), p.dollarRate || st.avgBuyRate);
         const curValDisplay = toDisplay(p.qty * effectivePrice, currentDollarRate || p.dollarRate || st.avgBuyRate);
         const gain = curValDisplay - investedDisplay;
-        const pct = investedDisplay > 0 ? (gain/investedDisplay)*100 : 0;
+        const pct = investedDisplay > 0 ? (gain/investedDisplay)*100 : (Number.isFinite(investedDisplay) ? 0 : NaN);
         return `
           <tr data-id="${escapeHtml(p.id)}">
             <td>${escapeHtml(p.date) || '—'}</td>
@@ -1073,7 +1189,7 @@ PEPE	100	0.0000098"></textarea>
         const simValueUSDT = st.qtyRemaining * simPrice;
         const simValueDisplay = toDisplay(simValueUSDT, currentDollarRate || st.avgBuyRate);
         const simGain = simValueDisplay - st.investedRemainingDisplay;
-        const simPct = st.investedRemainingDisplay > 0 ? (simGain / st.investedRemainingDisplay) * 100 : 0;
+        const simPct = st.investedRemainingDisplay > 0 ? (simGain / st.investedRemainingDisplay) * 100 : (Number.isFinite(st.investedRemainingDisplay) ? 0 : NaN);
         simHtml = `você recebe <span class="amt">${fmtMoney(simValueDisplay)}</span> —
           <span class="${cls(simGain)}">${resultPhrase(simGain, 'lucro de', 'prejuízo de', 'sem lucro nem prejuízo')}${simGain !== 0 ? ' (' + fmtPct(simPct) + ')' : ''}</span>`;
       }
@@ -1087,7 +1203,7 @@ PEPE	100	0.0000098"></textarea>
             </div>
             <div class="price-edit">
               preço atual (USDT)
-              <input type="number" step="any" value="${escapeHtml(st.currentPrice)}" data-curprice="${coinH}">
+              <input type="text" inputmode="decimal" value="${escapeHtml(inputNumber(st.currentPrice))}" data-curprice="${coinH}">
               <button class="btn btn-ghost fetch-btn" data-fetch="${coinH}" type="button">buscar preço</button>
               <button class="btn btn-ghost fetch-btn delete-coin-btn" data-delete-coin="${coinH}" type="button">excluir moeda</button>
             </div>
@@ -1140,7 +1256,7 @@ PEPE	100	0.0000098"></textarea>
         for (const coin of new Set(removed.map(p => p.coin))) {
           const bought = remaining.filter(p => p.coin === coin).reduce((sum, p) => sum + p.qty, 0);
           const sold = sales.filter(s => s.coin === coin).reduce((sum, s) => sum + s.qty, 0);
-          if (sold - bought > 1e-9) {
+          if (sold - bought > qtyTolerance(Math.max(bought, sold))) {
             alert('Não é possível remover esta compra de ' + coin + '. Já foram vendidos ' +
               fmtQty(sold) + ' e restariam apenas ' + fmtQty(bought) +
               ' comprados. Remova ou ajuste a venda antes de excluir a compra.');
@@ -1154,9 +1270,12 @@ PEPE	100	0.0000098"></textarea>
     container.querySelectorAll('[data-curprice]').forEach(inp => {
       inp.addEventListener('change', () => {
         const coin = inp.dataset.curprice;
-        const val = parseFloat(inp.value.replace(',', '.'));
-        if (!isFinite(val)) return;
-        purchases.forEach(p => { if (p.coin === coin) p.currentPrice = val; });
+        const val = parseLocaleNumber(inp.value);
+        if (!Number.isFinite(val) || val <= 0) { inp.value = inputNumber(inheritedPrice(coin, 0)); return; }
+        walletRevision++;
+        updateAllBtn.disabled = false;
+        updateAllBtn.textContent = updateAllLabel;
+        purchases.forEach(p => { if (p.coin === coin) { p.currentPrice = val; p.currentPriceManual = true; } });
         save();
         const caret = inp.selectionStart;
         render();
@@ -1207,6 +1326,7 @@ PEPE	100	0.0000098"></textarea>
     allSaleDetails.sort((a,b) => (b.date||'').localeCompare(a.date||''));
     const months = Array.from(new Set(allSaleDetails.filter(d => d.date).map(d => d.date.slice(0,7)))).sort().reverse();
     const currentSelection = salesMonthFilter;
+    if (currentSelection !== 'all' && !months.includes(currentSelection)) months.push(currentSelection);
     filterSelect.innerHTML = '<option value="all">todos os meses</option>' +
       months.map(m => `<option value="${escapeHtml(m)}">${escapeHtml(m)}</option>`).join('');
     filterSelect.value = months.includes(currentSelection) || currentSelection === 'all' ? currentSelection : 'all';
@@ -1306,7 +1426,8 @@ PEPE	100	0.0000098"></textarea>
     const price = await fetchBinancePrice(coin);
     if (revision !== walletRevision) return;
     if (price !== null) {
-      purchases.forEach(p => { if (p.coin === coin) p.currentPrice = price; });
+      purchases.forEach(p => { if (p.coin === coin) { p.currentPrice = price; delete p.currentPriceManual; } });
+      priceUpdatedAt.set(activeWallet.id, Date.now());
       save(); render();
     } else {
       btn.textContent = original;
@@ -1316,7 +1437,8 @@ PEPE	100	0.0000098"></textarea>
   }
   async function fetchAllPrices(silent){
     const btn = document.getElementById('updateAllBtn');
-    const coins = Array.from(new Set(purchases.map(p => p.coin)));
+    const coins = Array.from(new Set(purchases.map(p => p.coin))).filter(coin =>
+      !silent || !purchases.some(p => p.coin === coin && p.currentPriceManual));
     if (coins.length === 0) return;
     const originalText = btn ? btn.textContent : '';
     if (btn) { btn.textContent = 'atualizando...'; btn.disabled = true; }
@@ -1327,11 +1449,11 @@ PEPE	100	0.0000098"></textarea>
     const failed = [];
     coins.forEach((coin, i) => {
       if (results[i] !== null) {
-        purchases.forEach(p => { if (p.coin === coin) p.currentPrice = results[i]; });
+        purchases.forEach(p => { if (p.coin === coin) { p.currentPrice = results[i]; delete p.currentPriceManual; } });
         updated++;
       } else { failed.push(coin); }
     });
-    if (updated > 0) save();
+    if (updated > 0) { priceUpdatedAt.set(activeWallet.id, Date.now()); save(); }
     render();
     if (btn) { btn.textContent = originalText; btn.disabled = false; }
     if (!silent && failed.length === coins.length) {
@@ -1341,8 +1463,8 @@ PEPE	100	0.0000098"></textarea>
     }
   }
   function updateComputedQty(){
-    const usdt = parseFloat(document.getElementById('f-usdt').value.replace(',', '.'));
-    const price = parseFloat(document.getElementById('f-price').value.replace(',', '.'));
+    const usdt = parseLocaleNumber(document.getElementById('f-usdt').value);
+    const price = parseLocaleNumber(document.getElementById('f-price').value);
     const el = document.getElementById('computedQty');
     if (isFinite(usdt) && isFinite(price) && price > 0) {
       el.textContent = 'quantidade calculada: ' + (usdt/price).toLocaleString('pt-BR', {maximumFractionDigits: 8});
@@ -1360,10 +1482,10 @@ PEPE	100	0.0000098"></textarea>
     const errEl = document.getElementById('errorMsg');
     errEl.textContent = '';
     const coin = coinEl.value.trim().toUpperCase();
-    const usdtSpent = parseFloat(usdtEl.value.replace(',', '.'));
-    const price = parseFloat(priceEl.value.replace(',', '.'));
-    const fee = parseFloat(feeEl.value.replace(',', '.'));
-    const dollarRate = parseFloat(rateEl.value.replace(',', '.'));
+    const usdtSpent = parseLocaleNumber(usdtEl.value);
+    const price = parseLocaleNumber(priceEl.value);
+    const fee = parseLocaleNumber(feeEl.value);
+    const dollarRate = parseLocaleNumber(rateEl.value);
     const date = dateEl.value;
     if (!coin) { errEl.textContent = 'informe o nome da moeda.'; return; }
     if (!isFinite(usdtSpent) || usdtSpent <= 0) { errEl.textContent = 'informe quanto foi gasto em USDT.'; return; }
@@ -1373,13 +1495,20 @@ PEPE	100	0.0000098"></textarea>
       id: uid(), coin, usdtSpent, price, qty,
       fee: isFinite(fee) && fee > 0 ? fee : null,
       dollarRate: isFinite(dollarRate) && dollarRate > 0 ? dollarRate : null,
-      currentPrice: price, date: date || ''
+      ...(purchases.some(p => p.coin === coin && p.currentPriceManual) ? {currentPriceManual: true} : {}),
+      currentPrice: inheritedPrice(coin, price), date: sanitizeDate(date)
     });
     save();
     coinEl.value = ''; usdtEl.value = ''; priceEl.value = ''; feeEl.value = ''; rateEl.value = ''; dateEl.value = '';
     document.getElementById('computedQty').textContent = '';
     coinEl.focus();
     render();
+  });
+  document.getElementById('sellAllBtn').addEventListener('click', () => {
+    const coin = document.getElementById('s-coin').value.trim().toUpperCase();
+    const remaining = computeCoinStats(coin).qtyRemaining;
+    document.getElementById('s-qty').value = inputNumber(remaining).replace('.', ',');
+    updateSellAvailable();
   });
   function updateSellAvailable(){
     const coin = document.getElementById('s-coin').value.trim().toUpperCase();
@@ -1401,25 +1530,27 @@ PEPE	100	0.0000098"></textarea>
     const errEl = document.getElementById('sellErrorMsg');
     errEl.textContent = '';
     const coin = coinEl.value.trim().toUpperCase();
-    const qty = parseFloat(qtyEl.value.replace(',', '.'));
-    const sellPrice = parseFloat(priceEl.value.replace(',', '.'));
-    const fee = parseFloat(feeEl.value.replace(',', '.'));
-    const dollarRate = parseFloat(rateEl.value.replace(',', '.'));
+    let qty = parseLocaleNumber(qtyEl.value);
+    const sellPrice = parseLocaleNumber(priceEl.value);
+    const fee = parseLocaleNumber(feeEl.value);
+    const dollarRate = parseLocaleNumber(rateEl.value);
     const date = dateEl.value;
     if (!coin) { errEl.textContent = 'informe a moeda.'; return; }
     const st = computeCoinStats(coin);
     if (st.qtyBought === 0) { errEl.textContent = 'essa moeda ainda não tem nenhuma compra registrada.'; return; }
     if (!isFinite(qty) || qty <= 0) { errEl.textContent = 'informe a quantidade vendida.'; return; }
-    if (qty > st.qtyRemaining + 1e-9) {
+    if (qty > st.qtyRemaining + qtyTolerance(st.qtyBought)) {
       errEl.textContent = 'quantidade maior que o saldo disponível (' + fmtQty(st.qtyRemaining) + ' ' + coin + ').';
       return;
     }
+    if (Math.abs(qty - st.qtyRemaining) <= qtyTolerance(st.qtyBought)) qty = st.qtyRemaining;
+    if (qty <= 0) { errEl.textContent = 'não há saldo disponível.'; return; }
     if (!isFinite(sellPrice) || sellPrice <= 0) { errEl.textContent = 'informe o preço de venda.'; return; }
     sales.push({
       id: uid(), coin, qty, sellPrice,
       fee: isFinite(fee) && fee > 0 ? fee : null,
       dollarRate: isFinite(dollarRate) && dollarRate > 0 ? dollarRate : null,
-      date: date || ''
+      date: sanitizeDate(date)
     });
     save();
     coinEl.value = ''; qtyEl.value = ''; priceEl.value = ''; feeEl.value = ''; rateEl.value = ''; dateEl.value = '';
@@ -1427,13 +1558,13 @@ PEPE	100	0.0000098"></textarea>
     render();
   });
   function parseImportLine(line){
-    const delim = line.includes('\t') ? '\t' : ',';
+    const delim = line.includes('\t') ? '\t' : line.includes(';') ? ';' : ',';
     const parts = line.split(delim).map(s => s.trim());
     return {
       coin: (parts[0] || '').toUpperCase(),
-      usdtSpent: parts[1] !== undefined && parts[1] !== '' ? parseFloat(parts[1].replace(',', '.')) : NaN,
-      price: parts[2] !== undefined && parts[2] !== '' ? parseFloat(parts[2].replace(',', '.')) : NaN,
-      dollarRate: parts[3] !== undefined && parts[3] !== '' ? parseFloat(parts[3].replace(',', '.')) : null,
+      usdtSpent: parts[1] !== undefined && parts[1] !== '' ? parseLocaleNumber(parts[1]) : NaN,
+      price: parts[2] !== undefined && parts[2] !== '' ? parseLocaleNumber(parts[2]) : NaN,
+      dollarRate: parts[3] !== undefined && parts[3] !== '' ? parseLocaleNumber(parts[3]) : null,
       date: parts[4] !== undefined ? sanitizeDate(parts[4].trim()) : ''
     };
   }
@@ -1467,7 +1598,8 @@ PEPE	100	0.0000098"></textarea>
         id: uid(), coin: row.coin.slice(0, 30), usdtSpent: row.usdtSpent, price: row.price,
         qty: row.usdtSpent / row.price, fee: null,
         dollarRate: (row.dollarRate && isFinite(row.dollarRate) && row.dollarRate > 0) ? row.dollarRate : null,
-        currentPrice: row.price, date: row.date || ''
+        ...(purchases.some(p => p.coin === row.coin && p.currentPriceManual) ? {currentPriceManual: true} : {}),
+        currentPrice: inheritedPrice(row.coin, row.price), date: row.date || ''
       });
       added++;
     });
@@ -1485,8 +1617,9 @@ PEPE	100	0.0000098"></textarea>
     return (v === null || v === undefined || !isFinite(v)) ? '' : String(v).replace('.', ',');
   }
   function csvText(v){
-    const s = String(v === null || v === undefined ? '' : v).replace(/;/g, ',');
-    return /^[=+\-@\t\r]/.test(s) ? "'" + s : s;
+    let s = String(v === null || v === undefined ? '' : v);
+    if (/^[=+\-@\t\r]/.test(s)) s = "'" + s;
+    return /[;"\r\n]/.test(s) ? '"' + s.replace(/"/g, '""') + '"' : s;
   }
   document.getElementById('exportCsvBtn').addEventListener('click', () => {
     const header = ['Tipo','Moeda','Data','Quantidade','Preco (USDT)','Total (USDT)','Taxa (USDT)','Cambio (USD/BRL)'];
@@ -1534,13 +1667,12 @@ PEPE	100	0.0000098"></textarea>
     reader.onload = () => {
       try {
         const backup = JSON.parse(reader.result);
+        validationReport = { corrected: 0, discarded: 0, wallets: 0 };
         let imported;
         if (backup?.version === 4) {
           imported = cleanWalletData(backup);
         } else if (backup?.version === 3 && Array.isArray(backup.purchases)) {
-          const wallet = makeWallet('Carteira importada',
-            sanitizeList(backup.purchases, sanitizePurchase), sanitizeList(backup.sales, sanitizeSale));
-          imported = { activeId: wallet.id, wallets: [wallet] };
+          imported = cleanWalletData({wallets: [{id: uid(), name: 'Carteira importada', purchases: backup.purchases, sales: backup.sales || []}]});
         }
         if (!imported) throw new Error('formato inválido');
         const describe = list => list.length + ' carteira(s), ' +
@@ -1552,7 +1684,7 @@ PEPE	100	0.0000098"></textarea>
           new Set(issues.map(issue => issue.walletId)).size +
           ' carteira(s). Os registros serão mantidos se você continuar.' : '';
         if (!confirm('Substituir os dados atuais (' + describe(wallets) + ')?\n\n' +
-          'O backup vai carregar ' + describe(imported.wallets) + '.' + balanceWarning)) return;
+          'O backup vai carregar ' + describe(imported.wallets) + '. Registros corrigidos: ' + validationReport.corrected + '; descartados: ' + validationReport.discarded + '; carteiras descartadas: ' + validationReport.wallets + '.' + balanceWarning)) return;
         wallets = imported.wallets;
         if (backup.currency === 'USDT' || backup.currency === 'BRL') currency = backup.currency;
         if (backup.currentDollarRate === null || (Number.isFinite(backup.currentDollarRate) && backup.currentDollarRate > 0)) {
@@ -1561,7 +1693,7 @@ PEPE	100	0.0000098"></textarea>
           setRateMetadata(backup.rateSource, backup.rateUpdatedAt);
         }
         if (backup.sortMode === 'alpha' || backup.sortMode === 'usdt') sortMode = backup.sortMode;
-        saveCurrency(); saveRate(); saveSort();
+
         document.getElementById('sortSelect').value = sortMode;
         selectWallet(wallets.find(wallet => wallet.id === imported.activeId));
         alert('Backup carregado: ' + describe(wallets) + '.');
@@ -1583,12 +1715,14 @@ PEPE	100	0.0000098"></textarea>
     const btn = e.target.closest('button[data-cur]');
     if (!btn) return;
     currency = btn.dataset.cur;
+    currencyFallbackNotice = '';
+    applyCurrencyFallback();
     saveCurrency();
     render();
   });
   document.getElementById('fetchRateBtn').addEventListener('click', () => fetchDollarRate(false));
   document.getElementById('currentDollarRate').addEventListener('input', (e) => {
-    const val = parseFloat(e.target.value.replace(',', '.'));
+    const val = parseLocaleNumber(e.target.value);
     rateRevision++;
     currentDollarRate = isFinite(val) && val > 0 ? val : null;
     setRateMetadata('manual', Date.now());
@@ -1675,6 +1809,51 @@ PEPE	100	0.0000098"></textarea>
       openHelp('usage', true);
     }
   }
+  window.addEventListener('storage', event => {
+    if (event.key !== WALLETS_KEY) return;
+    if (event.newValue === JSON.stringify({ activeId: activeWallet.id, wallets })) return;
+    const previousWallet = activeWallet;
+    const data = loadWalletData();
+    if (!data) {
+      showDataNotice('Dados alterados em outra aba, mas não puderam ser carregados. Recarregue antes de editar.');
+      writesBlocked = true;
+      return;
+    }
+    const selected = data.wallets.find(w => w.id === previousWallet.id);
+    const activeChanged = !selected || JSON.stringify(selected) !== JSON.stringify(previousWallet);
+    const focused = document.activeElement;
+    const editingCoin = focused?.dataset?.sim || focused?.dataset?.curprice;
+    const editingKind = focused?.dataset?.sim ? 'sim' : 'curprice';
+    const editingText = focused?.value;
+    const selectionStart = focused?.selectionStart;
+    const selectionEnd = focused?.selectionEnd;
+    wallets = data.wallets;
+    bindWallet(selected || wallets[0]);
+    if (!selected) {
+      resetWalletView();
+    } else if (activeChanged) {
+      walletRevision++;
+      updateAllBtn.disabled = false;
+      updateAllBtn.textContent = updateAllLabel;
+    }
+    renderWalletTabs();
+    if (activeChanged) {
+      priceUpdatedAt.delete(activeWallet.id);
+      render();
+      if (selected && editingCoin) {
+        const input = document.querySelector('[data-' + editingKind + '="' + cssEsc(editingCoin) + '"]');
+        if (input) {
+          input.value = editingText;
+          input.focus();
+          if (selectionStart !== null && selectionStart !== undefined) {
+            input.setSelectionRange(selectionStart, selectionEnd);
+          }
+        }
+      }
+    }
+    showDataNotice(selected ? 'dados atualizados em outra aba' :
+      'dados atualizados em outra aba; a carteira ativa foi excluída. Exibindo a primeira carteira disponível.');
+  });
   load();
   renderWalletTabs();
   try {
@@ -1684,6 +1863,7 @@ PEPE	100	0.0000098"></textarea>
       document.getElementById('sortSelect').value = sortMode;
     }
   } catch(e){}
+  applyCurrencyFallback();
   save();
   render();
   fetchDollarRate(true);
