@@ -217,7 +217,9 @@ def main(argv=None):
     """Executa o CLI e devolve código de saída para uso em terminal e testes."""
     parser = argparse.ArgumentParser(description="Gera gráficos PNG de backups da Carteira Cripto, em USDT.")
     parser.add_argument("backup", type=Path, help="Arquivo JSON, versão 3 ou 4")
-    parser.add_argument("--saida", type=Path, default=Path("graficos"), metavar="PASTA")
+    saida_padrao = Path.home() / "Downloads" / "graficos-carteira"
+    parser.add_argument("--saida", type=Path, default=saida_padrao, metavar="PASTA",
+                        help=f"Pasta dos PNGs (padrão: {saida_padrao})")
     parser.add_argument("--carteira", metavar="NOME", help="Filtra pelo nome, ignorando maiúsculas")
     args = parser.parse_args(argv)
     try:

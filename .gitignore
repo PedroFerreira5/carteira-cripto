@@ -1,0 +1,7 @@
+# Dados locais da carteira e relatórios gerados
+*.json
+*.png
+
+# Cache do Python
+__pycache__/
+.pytest_cache/

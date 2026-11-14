@@ -4,98 +4,52 @@ Eu estava com dificuldade de acompanhar meus resultados em cripto: fazia várias
 
 🔗 **Acesse:** [https://pedroferreira5.github.io/carteira-cripto/](https://pedroferreira5.github.io/carteira-cripto/)
 
----
+## Como usar
 
-## 📌 O que faz
+Abra o `index.html` em um navegador moderno. No primeiro acesso sem dados, o painel de ajuda abre automaticamente. Use **? ajuda** para rever o guia ou **ⓘ como ler as tabelas de compras** para consultar as colunas.
 
-### 💼 Gestão de compras e carteira
-- **Cadastro individual de compras:** informe o gasto em USDT, o preço pago e, opcionalmente, a taxa e a cotação do dólar (USD/BRL). A quantidade adquirida é calculada automaticamente.
-- **Preço médio (PM):** calcula o preço médio ponderado por moeda, incorporando as taxas pagas no custo base do ativo.
-- **Break-even:** mostra o valor unitário de venda necessário para empatar o investimento, já considerando as taxas.
-- **Simulador de venda:** digite um preço hipotético e veja o valor a receber, o lucro ou prejuízo e o percentual de retorno antes de realizar a ordem.
-- **Resultado por ordem:** custo, valor atual e resultado não realizado ($ e %) de cada compra e do consolidado da moeda.
+- **Carteiras:** crie carteiras independentes pelas abas no topo. Use **Renomear** para mudar o nome e escolher uma das seis cores. A aba selecionada é lembrada neste navegador.
+- **Compras:** informe a moeda, o gasto em USDT e o preço pago. Taxa, câmbio e data são opcionais. O site calcula a quantidade. Novas compras de uma moeda existente mantêm seu preço atual.
+- **Vendas:** registre vendas parciais ou use **vender tudo** para preencher o saldo exato. Filtre o histórico por mês. A remoção de uma compra é bloqueada se deixar vendas sem saldo.
+- **Simulação:** digite um preço em **vender a** para estimar quanto receberia e ver o resultado sem registrar uma venda.
+- **Organização:** busque moedas e ordene por nome ou valor investido. **Excluir moeda** remove as compras e vendas daquela moeda. **Apagar esta carteira** limpa as operações e mantém a aba. **Excluir**, no topo, remove a carteira ativa se houver outra.
 
-### 💸 Vendas e histórico
-- **Vendas parciais ou totais:** abate o saldo disponível e apura o **lucro/prejuízo realizado** usando o preço médio (PM) da moeda.
-- **Histórico com filtro por mês:** tabela dedicada às vendas, com resultado do período selecionado. O lucro realizado é recalculado automaticamente se novas compras alterarem o PM.
+## Importar compras
 
-### 💱 Cotações e câmbio
-- **Alternância USDT / BRL:** troque toda a visualização entre dólar (USDT) e reais (R$).
-- **Cotação do dólar informada por você:** defina a taxa USD/BRL de hoje para converter o valor de mercado das posições para reais. Cada compra e venda também pode guardar o câmbio do dia.
-- **Preço atual via Binance:** busca os pares contra USDT na API pública da Binance ao abrir a página, por botão individual ou geral. Se a busca falhar, você pode preencher o preço manualmente.
+1. Selecione a carteira de destino e abra **Importar Tabela**.
+2. Copie as células do Excel ou Google Sheets e cole na caixa de texto. Se estiver digitando, use ponto e vírgula entre os campos, como no exemplo abaixo.
+3. Clique em **Importar** e confira o resultado antes de colar outra tabela.
 
-### 🗂️ Organização e importação
-- **Busca e ordenação:** filtre moedas pelo nome e ordene por ordem alfabética ou por maior valor investido.
-- **Importação em massa:** cole várias compras direto do Excel ou Google Sheets.
-- **Exportação CSV e backup JSON:** exporte o histórico em CSV ou faça um backup completo para restaurar em outro navegador.
+```text
+Moeda;Gasto em USDT;Preço unitário em USDT;Câmbio;Data
+BTC;500;350.000,00;5,30;2026-03-10
+ETH;300;3200;;2026-05-02
+PEPE;100;0,0000098
+```
 
----
+O cabeçalho, o câmbio e a data são opcionais. Para informar a data sem câmbio, deixe a coluna de câmbio vazia, como na linha do ETH. Use datas no formato `AAAA-MM-DD` e vírgula para decimais. O valor `5.500` é lido como 5500. Para informar taxa, cadastre a compra em **+ Nova Compra**.
 
-## 📥 Modelo de tabela para importação em massa
+## Preços, câmbio e cálculos
 
-Na aba **Importar Tabela**, cole suas compras neste formato (colunas separadas por TAB ou vírgula, uma compra por linha):
+- A Binance fornece preços ao abrir a página, trocar de carteira ou usar os botões de atualização. Buscas automáticas preservam preços manuais. Uma busca solicitada pelo botão pode substituí-los. A interface indica o horário dos preços atualizados.
+- O seletor alterna entre USDT e R$. A cotação USDT/BRL é global e mostra origem e horário quando disponíveis. O campo também aceita a cotação do dólar informada à mão.
+- Em R$, o valor atual prioriza a cotação de hoje e pode usar o câmbio das compras como aproximação. Valores sem conversão aparecem como **—**. Ao selecionar R$ sem câmbio suficiente, o site pode voltar para USDT e explicar o motivo.
+- Taxas de compra entram no preço médio (PM) e no break-even. Taxas de venda reduzem o valor recebido. O lucro realizado usa o PM atual da moeda, então uma compra nova pode recalcular vendas anteriores.
 
-| Moeda | Usdt | Preco | Cambio | Data |
-| :--- | :--- | :--- | :--- | :--- |
-| BTC | 500 | 65000 | 5.30 | 2026-03-10 |
-| ETH | 300 | 3200 | | 2026-05-02 |
-| PEPE | 100 | 0.0000098 | | |
+## Dados, backups e privacidade
 
-- **Moeda:** ticker do ativo (ex: BTC, ETH, PEPE).
-- **Usdt:** valor total gasto em USDT.
-- **Preco:** preço unitário da moeda, em USDT, na data da compra.
-- **Cambio:** cotação USD/BRL na data da compra *(opcional)*.
-- **Data:** formato AAAA-MM-DD *(opcional)*.
+- Compras e vendas ficam no `localStorage` do navegador. A página usa a Binance para consultas de preço e o Google Fonts para carregar fontes. Você pode preencher preços e câmbio manualmente.
+- **Baixar backup** exporta todas as carteiras e configurações em JSON v4. **Carregar backup** aceita v3 e v4 e pede confirmação antes de substituir dados, indicando correções, descartes e inconsistências de saldo.
+- **Exportar para CSV** exporta as compras e vendas da carteira ativa. Usa UTF-8 com BOM, ponto e vírgula e neutralização de fórmulas em campos de texto.
+- Falhas de gravação exibem um aviso. Se houver dados problemáticos no armazenamento, o site tenta preservar o original e oferece **baixar cópia preservada** quando a cópia é criada.
+- Alterações em outra aba do navegador atualizam os dados. A digitação é preservada quando a carteira ativa ainda existe.
+- Guarde backups e gráficos com dados reais fora do repositório. O `.gitignore` ignora novos arquivos JSON, PNG e caches do Python.
 
-*Selecione as células na planilha (com ou sem cabeçalho) e cole direto na caixa de texto. A taxa não entra na importação em massa: se precisar dela, cadastre a compra manualmente.*
+O site usa HTML, CSS e JavaScript em um único arquivo, com tema escuro responsivo e escape do texto inserido na página.
 
----
+## Gráficos e testes
 
-## 🔒 Armazenamento, privacidade e segurança
-
-Os dados ficam **exclusivamente no seu navegador**, via `localStorage`. Não existe backend, servidor central ou envio das suas informações financeiras.
-
-- **Privacidade:** nenhum dado da sua carteira é transmitido a terceiros. As únicas requisições externas são a consulta pública de preços à API da Binance e o carregamento das fontes do Google Fonts (a página continua funcionando com fontes padrão se estiver sem internet).
-- **Uso offline:** você pode baixar o `index.html` e abri-lo direto no computador (os preços precisam ser preenchidos manualmente).
-- **Portabilidade:** use **baixar backup** e **carregar backup** no rodapé para levar seus dados entre navegadores ou computadores.
-- **Proteção contra XSS:** todo texto vindo do usuário (nome da moeda, busca, datas, mensagens de importação) é escapado antes de ser inserido na página.
-- **Validação de dados:** o conteúdo do `localStorage` e dos arquivos de backup é validado e normalizado ao carregar. Registros inválidos são descartados em vez de quebrar a tela.
-- **CSV seguro:** a exportação neutraliza textos que começam com `=`, `+`, `-` ou `@`, evitando injeção de fórmulas ao abrir no Excel.
-
----
-
-## 🛠️ Tecnologias
-
-- **HTML5 e CSS3:** layout responsivo com CSS Grid, Flexbox, variáveis CSS e tema escuro.
-- **JavaScript puro (ES6+):** sem frameworks nem dependências, em arquivo único, com IIFE para isolar o escopo.
-- **API REST (Binance):** requisições assíncronas (`fetch` / `async/await`) para os preços.
-- **Arquivos:** geração e leitura de JSON para backup e exportação de CSV com UTF-8 BOM e separador compatível com o Excel em português.
-
----
-
-## ▶️ Como rodar localmente
-
-Não precisa de servidor, Node.js nem build:
-
-1. Baixe o repositório ou salve o arquivo `index.html`.
-2. Dê dois cliques no arquivo para abrir em qualquer navegador moderno.
-
----
-
-## 🧠 Decisões de projeto e limitações
-
-- **Custo da venda usa o PM atual da moeda**, e não um método por lote (como FIFO). Por isso, cadastrar uma compra nova altera retroativamente o lucro realizado das vendas anteriores. É uma escolha deliberada de simplicidade e está explicada na própria tela.
-- **Taxas de compra entram no custo base**, ou seja, no PM e no break-even. Taxas de venda são descontadas do valor recebido.
-- **Preço atual por moeda:** hoje o preço atual é replicado dentro de cada compra. Um mapa único por moeda seria mais enxuto.
-- **Sem testes automatizados** para a lógica de cálculo (PM, lucro realizado e não realizado). É o principal ponto a evoluir.
-- **Câmbio:** quando uma compra ou venda não tem cotação informada, o app usa a cotação de hoje e, na falta dela, o câmbio médio das compras da moeda como aproximação.
-
-### Próximos passos
-- Testes unitários para as funções de cálculo.
-- Preço atual centralizado por moeda.
-- Gráficos de evolução da carteira.
-
----
+O gerador Python lê o backup, cria PNGs e imprime um resumo em USDT. Os testes automatizados cobrem os cálculos em Python e a leitura dos backups. [Instalação e comandos](graficos-python/README.md)
 
 ## ⚠️ Aviso legal
 
