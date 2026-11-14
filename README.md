@@ -16,18 +16,15 @@ Abra o `index.html` em um navegador moderno. No primeiro acesso sem dados, o pai
 
 ## Importar compras
 
-1. Selecione a carteira de destino e abra **Importar Tabela**.
-2. Copie as células do Excel ou Google Sheets e cole na caixa de texto. Se estiver digitando, use ponto e vírgula entre os campos, como no exemplo abaixo.
-3. Clique em **Importar** e confira o resultado antes de colar outra tabela.
+Cole uma compra por linha em **Importar Tabela**. Use tabulação ao copiar do Excel ou Google Sheets ou separe as colunas com ponto e vírgula. A vírgula também funciona como separador de colunas quando os números não usam vírgula decimal.
 
-```text
-Moeda;Gasto em USDT;Preço unitário em USDT;Câmbio;Data
-BTC;500;350.000,00;5,30;2026-03-10
-ETH;300;3200;;2026-05-02
-PEPE;100;0,0000098
-```
+| Moeda | Gasto USDT | Preço unitário USDT | Câmbio opcional | Data opcional |
+| --- | ---: | ---: | ---: | --- |
+| BTC | 500 | 350.000,00 | 5,30 | 2026-03-10 |
+| ETH | 300 | 3200 | | 2026-05-02 |
+| PEPE | 100 | 0,0000098 | | |
 
-O cabeçalho, o câmbio e a data são opcionais. Para informar a data sem câmbio, deixe a coluna de câmbio vazia, como na linha do ETH. Use datas no formato `AAAA-MM-DD` e vírgula para decimais. O valor `5.500` é lido como 5500. Para informar taxa, cadastre a compra em **+ Nova Compra**.
+Use vírgula para decimais. Por exemplo, `5.500` é lido como 5500. Para incluir taxa, use o cadastro individual.
 
 ## Preços, câmbio e cálculos
 
